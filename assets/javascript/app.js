@@ -8,7 +8,7 @@ function createButtons(topicArray) {
 }
 
 function getGifs(topic) {
-	$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURI(topic) + '&api_key=' + apiKey + '&limit=10')
+	$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=10')
 	.done(function(result) {
 		$('.instructions').removeClass('hidden');
 		$('#results').empty();

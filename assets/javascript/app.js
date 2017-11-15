@@ -41,9 +41,24 @@ function toggleAnimation(id) {
 }
 
 function addTopic(value) {
-	topics.push(value);
-	$('#buttons').empty();
-	createButtons(topics);
+	var alreadyAdded = false;
+	$('#formError').addClass('hidden').text('');
+	for (var i = 0; i < topics.length; i++) {
+		if (topics[i] === value) {
+			alreadyAdded = true;
+			break;
+		}
+	}
+
+	if (!alreadyAdded) {
+		topics.push(value);
+		$('#buttons').empty();
+		createButtons(topics);
+	}
+	else {
+		$('#formError').removeClass('hidden').text('That topic already exists.');
+	}
+	
 }
 
 $(function() {
@@ -58,7 +73,7 @@ $(function() {
 		toggleAnimation($(this).attr('id'));
 	});
 
-	$('#add').on('click', function(e) {
+	$('#form').on('submit', function(e) {
 		e.preventDefault();
 		addTopic($('#input').val());
 	});

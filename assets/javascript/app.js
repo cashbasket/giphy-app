@@ -1,5 +1,5 @@
 var apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
-var topics = ['homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz', 'super nintendo chalmers', 'treehouse of horror', 'sacrilicious'];
+var topics = ['homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz', 'super nintendo chalmers', 'treehouse of horror'];
 
 function createButtons(topicArray) {
 	for (var i = 0; i < topicArray.length; i++) {
@@ -12,11 +12,13 @@ function getGifs(topic) {
 	.done(function(result) {
 		$('.instructions').removeClass('hidden');
 		$('#results').empty();
+		
+		$('<ul>').addClass('result-list').appendTo($('#results'));
 		for (var i = 0; i < result.data.length; i++) {
-			var imgDiv = $('<div>').addClass('img-div');
+			var imgItem = $('<li>');
 			var rating = $('<span>').addClass('rating-span').text('Rating: ' + result.data[i].rating.toUpperCase());
-			var img = $('<img />').attr('id', result.data[i].id).attr('src', result.data[i].images.fixed_height_still.url).attr('alt', 'Image of ' + topic).addClass('result-image').appendTo($('#results'));
-			$('#results').append(imgDiv.append(img).append(rating));
+			var img = $('<img />').attr('id', result.data[i].id).attr('src', result.data[i].images.fixed_height_still.url).attr('alt', topic + ' GIF').addClass('result-image').appendTo($('#results'));
+			$('.result-list').append(imgItem.append(img).append(rating));
 		}	
 		
 	})

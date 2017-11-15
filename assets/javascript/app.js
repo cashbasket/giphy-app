@@ -10,6 +10,7 @@ function createButtons(topicArray) {
 function getGifs(topic) {
 	$.ajax('http://api.giphy.com/v1/gifs/search?q=' + encodeURI(topic) + '&api_key=' + apiKey + '&limit=10')
 	.done(function(result) {
+		$('.instructions').removeClass('hidden');
 		$('#results').empty();
 		for (var i = 0; i < result.data.length; i++) {
 			var imgDiv = $('<div>').addClass('img-div');

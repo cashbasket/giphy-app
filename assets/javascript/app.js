@@ -15,7 +15,7 @@ function getGifs(topic) {
 			var imgDiv = $('<div>').addClass('img-div');
 			var rating = $('<span>').addClass('rating-span').text('Rating: ' + result.data[i].rating.toUpperCase());
 			var img = $('<img />').attr('id', result.data[i].id).attr('src', result.data[i].images.fixed_height_still.url).attr('alt', 'Image of ' + topic).addClass('result-image').appendTo($('#results'));
-			$('#results').append(imgDiv.append(rating).append(img));
+			$('#results').append(imgDiv.append(img).append(rating));
 		}	
 		
 	})

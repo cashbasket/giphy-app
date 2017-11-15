@@ -52,11 +52,11 @@ input {
 
 .instructions {
     background-color: #f6ecba;
-    padding: 5px;
+    padding: 10px 5px;
     border-radius: 5px;
     border: 1px solid #000;
     text-align: center;
-    margin-bottom: 5px;
+    margin: 0 5px 5px 5px;
 }
 
 #formError {

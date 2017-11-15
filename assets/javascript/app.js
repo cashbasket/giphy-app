@@ -1,5 +1,5 @@
 var apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
-var topics = ['homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'd\'oh', 'woohoo', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz', 'super nintendo chalmers'];
+var topics = ['homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz', 'super nintendo chalmers', 'treehouse of horror', 'sacrilicious'];
 
 function createButtons(topicArray) {
 	for (var i = 0; i < topicArray.length; i++) {

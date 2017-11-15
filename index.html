@@ -13,20 +13,23 @@
 </head>
 <body class="site">
 	<div class="container site-content">
+		<img class="title-image img-responsive" src="https://fontmeme.com/permalink/171115/e3ffb286949c1e1d0710cb367704edc5.png" alt="Simpsons GIFs!"></a>
+		<h1 class="hidden">Simpsons GIFs!</h1>
 		<div class="row">
 			<div class="col-md-9">
-				<h2>Topics:</h2>
+				<h2>Current Topics:</h2>
 				<div id="buttons"></div>
 			</div>
 			<div class="col-md-3">
+				<h2>Add a Topic:</h2>
 				<aside id="addTopics" class="well add-well">
 					<form id="form">
 						<div class="form-group">
-							<label for="name">Add a Topic:</label>
-						<input type="text" id="input" class="form-control" required pattern="[^\s][\s\S]*" />
+							<label for="input">Enter something Simpsons-y!</label>
+							<input type="text" id="input" placeholder="D'oh!" class="form-control" required pattern="[^\s][\s\S]*" />
 						</div>
 						<div id="formError" class="hidden"></div>
-						<button id="submit" type="submit" class="btn btn-success">Add</button>
+						<button id="submit" type="submit" class="btn btn-success">Add Topic</button>
 					</form>
 				</aside>
 			</div>

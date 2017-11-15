@@ -1,194 +1,193 @@
 body {
-    font-family: 'Oswald', sans-serif;
-    font-size: 16px;
-    background: #f9db45 url(../images/bg.jpg) fixed no-repeat;
-    background-size: cover;
+	font-family: 'Oswald', sans-serif;
+	font-size: 16px;
+	background: #f9db45 url(../images/bg.jpg) fixed no-repeat;
+	background-size: cover;
 }
 
 .site {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
 }
 
 .site-content {
-    flex: 1; 
-    padding: 20px 0;
+	flex: 1; 
+	padding: 20px 0;
 }
 
 h1 {
-    font-size: 4em;
-    margin-bottom: 20px;
-    color: #2980b9;
-    text-align: center;
-    font-weight: bold;
+	font-size: 4em;
+	margin-bottom: 20px;
+	color: #2980b9;
+	text-align: center;
+	font-weight: bold;
 }
 
 h2 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    color: #000;
-    font-weight: bold;
+	font-size: 1.5em;
+	margin-bottom: 10px;
+	color: #000;
+	font-weight: bold;
 }
 
 h3 {
-    font-size: 1.15em;
-    color: #000;
-    font-weight: bold;
+	font-size: 1.15em;
+	color: #000;
+	font-weight: bold;
 }
 
 label {
-    font-weight: bold;
-    margin-bottom: 10px;
+	font-weight: bold;
+	margin-bottom: 10px;
 }
 
 input {
-    font-family: 'Arial', 'Helvetica', sans-serif;
+	font-family: 'Arial', 'Helvetica', sans-serif;
 }
 
 .title-image {
-  margin: 0 auto 20px auto;
+	margin: 0 auto 20px auto;
 }
 
 .instructions {
-    background-color: #f6ecba;
-    padding: 10px 5px;
-    border-radius: 5px;
-    border: 1px solid #000;
-    text-align: center;
-    margin: 0 5px 5px 5px;
+	background-color: #f6ecba;
+	padding: 10px 5px;
+	border-radius: 5px;
+	border: 1px solid #000;
+	text-align: center;
+	margin: 0 5px 5px 5px;
 }
 
 #formError {
-    font-weight: bold;
-    color: #f00;
-    padding-bottom: 10px;
+	font-weight: bold;
+	color: #f00;
+	padding-bottom: 10px;
 
 }
 
 .btn.btn-option,
 .btn.btn-success {
-    -webkit-border-radius: 10;
-    -moz-border-radius: 10;
-    font-family: 'Arial', 'Helvetica', sans-serif;
-    color: #ffffff;
-    font-size: 16px;
-    padding: 5px 10px;
-    text-decoration: none;
-    margin: 3px;
+	-webkit-border-radius: 10;
+	-moz-border-radius: 10;
+	font-family: 'Arial', 'Helvetica', sans-serif;
+	color: #ffffff;
+	font-size: 16px;
+	padding: 5px 10px;
+	text-decoration: none;
+	margin: 3px;
 }
 
 .btn.btn-option {
-    background: #3498db;
-    border-radius: 10px;
-    border: 1px solid #fff;
-    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-    background-image: -o-linear-gradient(top, #3498db, #2980b9);
-    background-image: linear-gradient(to bottom, #3498db, #2980b9);
+	background: #3498db;
+	border-radius: 10px;
+	border: 1px solid #fff;
+	background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+	background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+	background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+	background-image: -o-linear-gradient(top, #3498db, #2980b9);
+	background-image: linear-gradient(to bottom, #3498db, #2980b9);
 }
 
 .btn.btn-option:hover {
-    background: #3cb0fd;
-    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
-    text-decoration: none;
+	background: #3cb0fd;
+	background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+	background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+	background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+	background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+	background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+	text-decoration: none;
 }
 
 .well.add-well {
-    background-color: #333;
-    border: 2px solid #fff;
-    color: #fff;
+	background-color: #333;
+	border: 2px solid #fff;
+	color: #fff;
 }
 
 .img-div {
-    text-align: center;
-    float: left;
-    border: 1px solid #2980b9;
-    margin: 5px;
-    padding: 5px;
-    background-color: #c5e2ec;
-    border-radius: 5px;
+	text-align: center;
+	float: left;
+	border: 1px solid #2980b9;
+	margin: 5px;
+	padding: 5px;
+	background-color: #c5e2ec;
+	border-radius: 5px;
 }
 
 .result-image {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .rating-span {
-    display: block; 
-    color: #000;
-    text-align: center;
-    font-size: 18px;
-    padding: 10px 5px 5px 5px;
+	display: block; 
+	color: #000;
+	text-align: center;
+	font-size: 18px;
+	padding: 10px 5px 5px 5px;
 }
 
 .sidebar {
-    background-color: #ccc;
-    padding: 10px;
-    margin: 20px 0 0 10px;
-    border: 1px solid #666;
+	background-color: #ccc;
+	padding: 10px;
+	margin: 20px 0 0 10px;
+	border: 1px solid #666;
 }
 
 .clearfix::after {
-  content: "";
-  display: block;
-  clear: both;
+	content: "";
+	display: block;
+	clear: both;
 }
 
-
 footer {
-    background-color: #000;
-    color: #fffdf4;
-    border-top: 1px solid #fffdf4;
-    padding: 10px;
-    font-family: 'Oswald', sans-serif;
+	background-color: #000;
+	color: #fffdf4;
+	border-top: 1px solid #fffdf4;
+	padding: 10px;
+	font-family: 'Oswald', sans-serif;
 }
 
 .social {
-    list-style: none;
-    float: right;
-    font-size: 18px;
-    max-width: 200px;
+	list-style: none;
+	float: right;
+	font-size: 18px;
+	max-width: 200px;
 }
 
 .social li {
-    float: left;
-    margin-right: 10px;
+	float: left;
+	margin-right: 10px;
 }
 
 .social li a {
-    color: #fffdf4;
+	color: #fffdf4;
 }
 
 .social li a:hover {
-    color: #f9db45;
+	color: #f9db45;
 }
 
 .social li:last-of-type {
-    margin-right: 0;
+	margin-right: 0;
 }
 
 @media screen and (max-width: 992px) {
-    footer {
-        text-align: center;
-        line-height: 1.5;
-    }
-    .social {
-        list-style: none;
-        position: relative;
-        float: left;
-        display: block;
-        left: 50%;
-    }
-    .social li {
-        position: relative;
-        float: left;
-        display: block;
-        right: 50%;
-    }
+	footer {
+		text-align: center;
+		line-height: 1.5;
+	}
+	.social {
+		list-style: none;
+		position: relative;
+		float: left;
+		display: block;
+		left: 50%;
+	}
+	.social li {
+		position: relative;
+		float: left;
+		display: block;
+		right: 50%;
+	}
 }

@@ -21,7 +21,8 @@ function getGifs(topic) {
 		
 	})
 	.fail(function(error) {
-		console.log(error);
+		$('#results').empty();
+		$('#results').html('<h2 class="well">ERROR: Unable to retrieve GIFs!</h2>');
 	});
 }
 

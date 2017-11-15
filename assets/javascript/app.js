@@ -8,10 +8,8 @@ function createButtons(topicArray) {
 }
 
 function getGifs(topic) {
-
 	$.ajax('http://api.giphy.com/v1/gifs/search?q=' + encodeURI(topic) + '&api_key=' + apiKey + '&limit=10')
 	.done(function(result) {
-		console.log(result);
 		$('#results').empty();
 		for (var i = 0; i < result.data.length; i++) {
 			$('<img />').attr('id', result.data[i].id).attr('src', result.data[i].images.fixed_height_still.url).attr('alt', 'Image of ' + topic).addClass('result-image').appendTo($('#results'));
@@ -24,6 +22,7 @@ function getGifs(topic) {
 }
 
 function toggleAnimation(id) {
+	//first, get individual image object based on id
 	$.ajax('http://api.giphy.com/v1/gifs/' + id + '?api_key=' + apiKey)
 	.done(function(result) {
 		if($('#' + id).attr('class') === 'result-image animated') {

@@ -12,8 +12,11 @@ function getGifs(topic) {
 	.done(function(result) {
 		$('#results').empty();
 		for (var i = 0; i < result.data.length; i++) {
-			$('<img />').attr('id', result.data[i].id).attr('src', result.data[i].images.fixed_height_still.url).attr('alt', 'Image of ' + topic).addClass('result-image').appendTo($('#results'));
-		}
+			var imgDiv = $('<div>').addClass('img-div');
+			var rating = $('<span>').addClass('rating-span').text('Rating: ' + result.data[i].rating.toUpperCase());
+			var img = $('<img />').attr('id', result.data[i].id).attr('src', result.data[i].images.fixed_height_still.url).attr('alt', 'Image of ' + topic).addClass('result-image').appendTo($('#results'));
+			$('#results').append(imgDiv.append(rating).append(img));
+		}	
 		
 	})
 	.fail(function(error) {

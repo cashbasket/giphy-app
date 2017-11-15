@@ -8,7 +8,7 @@ function createButtons(topicArray) {
 }
 
 function getGifs(topic) {
-	$.ajax('http://api.giphy.com/v1/gifs/search?q=' + encodeURI(topic) + '&api_key=' + apiKey + '&limit=10')
+	$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURI(topic) + '&api_key=' + apiKey + '&limit=10')
 	.done(function(result) {
 		$('.instructions').removeClass('hidden');
 		$('#results').empty();
@@ -27,7 +27,7 @@ function getGifs(topic) {
 
 function toggleAnimation(id) {
 	//first, get individual image object based on id
-	$.ajax('http://api.giphy.com/v1/gifs/' + id + '?api_key=' + apiKey)
+	$.ajax('https://api.giphy.com/v1/gifs/' + id + '?api_key=' + apiKey)
 	.done(function(result) {
 		if($('#' + id).attr('class') === 'result-image animated') {
 			$('#' + id).attr('src', result.data.images.fixed_height_still.url).removeClass('animated');

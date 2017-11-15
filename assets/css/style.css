@@ -33,7 +33,7 @@ h2 {
 
 h3 {
 	font-size: 1.2em;
-	color: #dd1d1a;
+	color: #2980b9;
 	font-weight: bold;
 }
 
@@ -51,7 +51,7 @@ input {
 }
 
 .instructions {
-	background-color: #f6ecba;
+	background-color: #c5e2ec;
 	padding: 10px 5px;
 	border-radius: 5px;
 	border: 1px solid #000;
@@ -115,7 +115,7 @@ input {
 	border: 1px solid #2980b9;
 	margin: 5px;
 	padding: 5px;
-	background-color: #c5e2ec;
+	background-color: #fff;
 	border-radius: 5px;
 }
 

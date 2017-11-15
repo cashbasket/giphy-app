@@ -148,6 +148,15 @@ footer {
 	padding: 10px;
 }
 
+footer a {
+	color: #fff;
+	text-decoration: underline;
+}
+
+footer a:hover {
+	color: #f9db45;
+}
+
 .social {
 	list-style: none;
 	float: right;
@@ -161,7 +170,8 @@ footer {
 }
 
 .social li a {
-	color: #fffdf4;
+	color: #fff;
+	text-decoration: none;
 }
 
 .social li a:hover {

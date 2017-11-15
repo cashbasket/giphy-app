@@ -115,6 +115,10 @@ input {
     border-radius: 5px;
 }
 
+.result-image {
+  cursor: pointer;
+}
+
 .rating-span {
     display: block; 
     color: #000;

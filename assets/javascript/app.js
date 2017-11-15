@@ -16,7 +16,7 @@ function getGifs(topic) {
 		$('<ul>').addClass('result-list').appendTo($('#results'));
 		for (var i = 0; i < result.data.length; i++) {
 			var imgItem = $('<li>');
-			var rating = $('<span>').addClass('rating-span').text('Rating: ' + result.data[i].rating.toUpperCase());
+			var rating = $('<span>').attr('id', 'rating-' + result.data[i].id).addClass('rating-span').text('Rating: ' + result.data[i].rating.toUpperCase());
 			var img = $('<img />').attr('id', result.data[i].id).attr('src', result.data[i].images.fixed_height_still.url).attr('alt', topic + ' GIF').addClass('result-image').appendTo($('#results'));
 			$('.result-list').append(imgItem.append(img).append(rating));
 		}	
@@ -40,7 +40,7 @@ function toggleAnimation(id) {
 		}		
 	})
 	.fail(function(error) {
-		console.log(error);
+		$('#rating-' + id).text("ERROR: Unable to animate GIF!");
 	});
 }
 

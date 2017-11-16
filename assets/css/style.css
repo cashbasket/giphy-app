@@ -69,8 +69,9 @@ input {
 	font-family: 'Arial', 'Helvetica', sans-serif;
 }
 
-#input {
-	width: 220px;
+.form-control {
+	width: 230px !important;
+	border-radius: 5px 0 0 5px;
 }
 
 .title-image {
@@ -108,6 +109,11 @@ input {
 	margin: 3px;
 }
 
+.btn.btn-success {
+	border-radius: 0 5px 5px 0;
+	padding: 5px 10px;
+}
+
 .btn.btn-option {
 	background: #3498db;
 	border-radius: 10px;
@@ -129,7 +135,9 @@ input {
 	text-decoration: none;
 }
 
-.well.add-well {
+.add-well {
+	padding: 15px;
+	border-radius: 5px;
 	background-color: #333;
 	border: 2px solid #fff;
 	color: #fff;
@@ -143,7 +151,7 @@ input {
 .result-list > li {
 	text-align: center;
 	float: left;
-	border: 1px solid #2980b9;
+	border: 1px solid #000;
 	margin: 5px;
 	padding: 5px;
 	background-color: #fff;

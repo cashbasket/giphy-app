@@ -1,6 +1,6 @@
 var apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
 var topics = ['homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz', 'super nintendo chalmers', 'treehouse of horror'];
-var lastItem, curId, curObj, curTopic;
+var lastItem, curObjArray, curTopic;
 
 function createButtons(topicArray) {
 	for (var i = 0; i < topicArray.length; i++) {
@@ -22,6 +22,7 @@ function getGifs(topic) {
 		$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=10')
 		.done(function(result) {
 			curTopic = topic;
+			curObjArray = result.data;
 			$('.instructions').removeClass('hidden');
 			$('#results').empty();
 			
@@ -29,7 +30,7 @@ function getGifs(topic) {
 			for (var i = 0; i < result.data.length; i++) {
 				var imgItem = $('<li>');
 				var rating = $('<span>').attr('id', 'rating-' + result.data[i].id).addClass('rating-span').text('Rating: ' + result.data[i].rating.toUpperCase());
-				var img = $('<img />').attr('id', result.data[i].id).attr('src', result.data[i].images.fixed_height_still.url).attr('alt', topic + ' GIF').addClass('result-image').appendTo($('#results'));
+				var img = $('<img />').attr('id', 'img-' + i).attr('data-id', result.data[i].id).attr('src', result.data[i].images.fixed_height_still.url).attr('alt', topic + ' GIF').addClass('result-image').appendTo($('#results'));
 				$('.result-list').append(imgItem.append(img).append(rating));
 			}	
 			
@@ -41,31 +42,15 @@ function getGifs(topic) {
 	}
 }
 
-function getGifObj(id) {
-	//don't make an API call every time the user clicks the same image repeatedly
-	if(curId != id) {
-		$.ajax('https://api.giphy.com/v1/gifs/' + id + '?api_key=' + apiKey)
-		.done(function(result) {
-			curId = id;
-			curObj = result;
-			toggleAnimation(curObj);
-		})
-		.fail(function(error) {
-			$('#rating-' + id).text("ERROR: Unable to animate GIF!");
-		});
-	}
-	else {
-		toggleAnimation(curObj);
-	}
-	
-}
+function toggleAnimation(id) {
+	var idSplit = id.split('-');
+	var pos = idSplit.pop();
 
-function toggleAnimation(obj) {
-	if($('#' + obj.data.id).attr('class') === 'result-image animated') {
-		$('#' + obj.data.id).attr('src', obj.data.images.fixed_height_still.url).removeClass('animated');
+	if($('#' + id).attr('class') === 'result-image animated') {
+		$('#' + id).attr('src', curObjArray[pos].images.fixed_height_still.url).removeClass('animated');
 	}
 	else {
-		$('#' + obj.data.id).attr('src', obj.data.images.fixed_height.url).addClass('animated');
+		$('#' + id).attr('src', curObjArray[pos].images.fixed_height.url).addClass('animated');
 	}		
 }
 
@@ -122,7 +107,7 @@ $(function() {
 	});
 
 	$('body').on('click', '.result-image', function() {
-		getGifObj($(this).attr('id'));
+		toggleAnimation($(this).attr('id'));
 	});
 
 	$('#form').on('submit', function(e) {

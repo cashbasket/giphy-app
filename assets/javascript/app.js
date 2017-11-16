@@ -1,13 +1,21 @@
 var apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
 var topics = ['homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz', 'super nintendo chalmers', 'treehouse of horror'];
+var lastItem;
 
 function createButtons(topicArray) {
 	for (var i = 0; i < topicArray.length; i++) {
-		var topicButton = $('<button />').attr('data-value', topicArray[i]).addClass('btn btn-option topic').prepend(topics[i]).appendTo($('#buttons'));
+		var topicButton = $('<button />').attr('id', 'button-' + i).attr('data-value', topicArray[i]).addClass('btn btn-option topic').prepend(topicArray[i]).appendTo($('#buttons'));
 	}
+	lastItem = topicArray[topicArray.length - 1];
 }
 
 function getGifs(topic) {
+	//un-pulsate the new buttons, if applicable
+	for(var i=0; i < topics.length; i++) {
+		if(topics[i] === lastItem) {
+			$('#button-' + i).removeClass('pulsate');
+		}
+	}
 	$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=10')
 	.done(function(result) {
 		$('.instructions').removeClass('hidden');
@@ -58,6 +66,15 @@ function addTopic(value) {
 		topics.push(value);
 		$('#buttons').empty();
 		createButtons(topics);
+		lastItem = topics[topics.length - 1];
+
+		for(var i=0; i < topics.length; i++) {
+			$('#button-' + i).removeClass('pulsate');
+			if(topics[i] === lastItem) {
+				$('#button-' + i).addClass('pulsate');
+			}
+		}
+		$('#input').val('');
 	}
 	else {
 		$('#formError').removeClass('hidden').text('That topic already exists.');

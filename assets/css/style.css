@@ -1,3 +1,26 @@
+@keyframes pulsate {
+	0% { 
+			background: #3498db; 
+			color: #fff;
+			border: 1px solid #fff;
+	}
+	50% { 
+			background: #fff; 
+			color: #3498db; 
+			border: 1px solid #3498db;
+	}
+	100% { 
+			background: #3498db; 
+			color: #fff;
+			border: 1px solid #fff;
+	}
+}
+
+.pulsate {
+	animation: pulsate 2s;
+	animation-iteration-count: 3;
+}
+
 body {
 	font-family: 'Barlow Semi Condensed', sans-serif;
 	font-size: 16px;

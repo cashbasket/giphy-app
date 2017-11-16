@@ -16,20 +16,17 @@
 		<img class="title-image img-responsive" src="assets/images/title.png" alt="Simpsons GIFs title image"></a>
 		<h1 class="sr-only">Simpsons GIFs!</h1>
 		<div class="row">
-			<div class="col-md-9">
+			<div class="col-md-8">
 				<h2>Current Topics:</h2>
 				<div id="buttons"></div>
 			</div>
-			<div class="col-md-3">
-				<h2>Create a Topic:</h2>
+			<div class="col-md-4">
 				<aside id="addTopics" class="well add-well">
-					<form id="form">
-						<div class="form-group">
-							<label for="input">Enter something Simpsons-y!</label>
-							<input type="text" id="input" placeholder="I voted for Kodos." class="form-control" required />
-						</div>
+					<form id="form" class="form-inline">
+						<label for="input">Create a New, Simpsons-y Topic:</label><br>
+						<input type="text" id="input" placeholder="Worst. Episode. Ever." class="form-control" required />
+						<button id="submit" type="submit" class="btn btn-success">Add Topic</button>
 						<div id="formError" class="hidden"></div>
-						<button id="submit" type="submit" class="btn btn-success">Add</button>
 					</form>
 				</aside>
 			</div>

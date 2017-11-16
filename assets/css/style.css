@@ -131,7 +131,9 @@ input {
 	padding: 5px 10px;
 }
 
-.btn-option:hover {
+.btn-option:hover,
+.btn-option:active,
+.btn-option:focus	 {
 	background: #3cb0fd;
 	background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
 	color: #fff;

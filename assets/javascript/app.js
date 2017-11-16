@@ -62,7 +62,7 @@ function addTopic(value) {
 		}
 	}
 
-	if (!alreadyAdded) {
+	if (!alreadyAdded && value.trim().length > 0) {
 		topics.push(value);
 		$('#buttons').empty();
 		createButtons(topics);
@@ -76,8 +76,11 @@ function addTopic(value) {
 		}
 		$('#input').val('');
 	}
-	else {
+	else if (alreadyAdded) {
 		$('#formError').removeClass('hidden').text('That topic already exists.');
+	}
+	else if (value.trim().length === 0) {
+		$('#formError').removeClass('hidden').text('Please enter a topic.');
 	}
 	
 }

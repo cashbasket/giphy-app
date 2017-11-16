@@ -4,7 +4,11 @@ var lastItem, curObjArray, curTopic;
 
 function createButtons(topicArray) {
 	for (var i = 0; i < topicArray.length; i++) {
-		var topicButton = $('<button />').attr('id', 'button-' + i).attr('data-value', topicArray[i]).addClass('btn btn-option topic').prepend(topicArray[i]).appendTo($('#buttons'));
+		$('<button />').attr('id', 'button-' + i)
+			.attr('data-value', topicArray[i])
+			.addClass('btn btn-option topic')
+			.prepend(topicArray[i])
+			.appendTo($('#buttons'));
 	}
 	lastItem = topicArray[topicArray.length - 1];
 }
@@ -25,15 +29,14 @@ function getGifs(topic) {
 			curObjArray = result.data;
 			$('.instructions').removeClass('hidden');
 			$('#results').empty();
-			
+
 			$('<ul>').addClass('result-list').appendTo($('#results'));
 			for (var i = 0; i < result.data.length; i++) {
 				var imgItem = $('<li>');
 				var rating = $('<span>').attr('id', 'rating-' + result.data[i].id).addClass('rating-span').text('Rating: ' + result.data[i].rating.toUpperCase());
 				var img = $('<img />').attr('id', 'img-' + i).attr('data-id', result.data[i].id).attr('src', result.data[i].images.fixed_height_still.url).attr('alt', topic + ' GIF').addClass('result-image').appendTo($('#results'));
 				$('.result-list').append(imgItem.append(img).append(rating));
-			}	
-			
+			}
 		})
 		.fail(function(error) {
 			$('#results').empty();
@@ -51,7 +54,7 @@ function toggleAnimation(id) {
 	}
 	else {
 		$('#' + id).attr('src', curObjArray[pos].images.fixed_height.url).addClass('animated');
-	}		
+	}
 }
 
 function addTopic(value) {
@@ -95,7 +98,6 @@ function addTopic(value) {
 	else if (value.trim().length === 0) {
 		$('#formError').removeClass('hidden').text('Please enter a topic.');
 	}
-	
 }
 
 $(function() {

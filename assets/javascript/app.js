@@ -56,7 +56,7 @@ function addTopic(value) {
 	var alreadyAdded = false;
 	$('#formError').addClass('hidden').text('');
 	for (var i = 0; i < topics.length; i++) {
-		if (topics[i] === value) {
+		if (topics[i] === value.trim()) {
 			alreadyAdded = true;
 			break;
 		}

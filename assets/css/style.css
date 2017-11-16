@@ -106,28 +106,22 @@ input {
   padding: 10px 0 0 0;
 }
 
-.btn-option, .btn-success {
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  color: #ffffff;
-  font-family: 'Arial', 'Helvetica', sans-serif;
-  font-size: 16px;
-  text-decoration: none;
-}
-
-.btn-success {
-  border-radius: 0 5px 5px 0;
-  padding: 5px 10px;
-}
-
 .btn-option {
   background: #3498db;
   background-image: linear-gradient(to bottom, #3498db, #2980b9);
   border: 1px solid #fff;
   border-radius: 10px;
+  color: #ffffff;
+  font-family: 'Arial', 'Helvetica', sans-serif;
+  font-size: 16px;
   margin: 3px;
   padding: 5px 10px;
+  text-decoration: none;
+}
+
+.btn-success {
+  border-radius: 0 5px 5px 0;
+  font-family: 'Arial', 'Helvetica', sans-serif;
 }
 
 .btn-option:hover, .btn-option:active, .btn-option:focus {

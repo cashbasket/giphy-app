@@ -17,6 +17,9 @@
 }
 
 .pulsate {
+	-moz-animation: pulsate 2s;
+	-o-animation: pulsate 2s;
+	-webkit-animation: pulsate 2s;
 	animation: pulsate 2s;
 	animation-iteration-count: 3;
 }

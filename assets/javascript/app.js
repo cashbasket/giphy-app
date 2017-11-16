@@ -77,6 +77,17 @@ function addTopic(value) {
 		$('#input').val('');
 	}
 	else if (alreadyAdded) {
+		var topicIndex;
+		for(var i=0; i < topics.length; i++) {
+			$('#button-' + i).removeClass('pulsate');
+			if(topics[i] === value.trim()) {
+				$('#button-' + i).addClass('pulsate');
+				topicIndex = i;
+			}
+		}
+		setTimeout(function() {
+			$('#button-' + topicIndex).removeClass('pulsate');
+		}, 6000);
 		$('#formError').removeClass('hidden').text('That topic already exists.');
 	}
 	else if (value.trim().length === 0) {

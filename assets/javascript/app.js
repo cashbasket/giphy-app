@@ -14,7 +14,7 @@ function createButtons(topicArray) {
 	lastItem = topicArray[topicArray.length - 1];
 }
 
-function getGifs(topic) {
+function getGIFs(topic) {
 	//un-pulsate the new buttons, if applicable
 	for (var i = 0; i < topics.length; i++) {
 		if (topics[i] === lastItem) {
@@ -22,33 +22,34 @@ function getGifs(topic) {
 		}
 	}
 
-	// don't make an API call over and over if user clicks same button multiple times in succession
+	//don't make an API call over and over if user clicks same button multiple times in succession
 	if (curTopic != topic) {
 		$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=10')
-			.done(function(result) {
+			.done(function(response) {
 				curTopic = topic;
-				curObjArray = result.data;
+				curObjArray = response.data;
 				$('#currentTopic').text(curTopic);
 				$('.instructions').removeClass('hidden');
 				$('#results').empty();
 
-				$('<ul>').addClass('result-list').appendTo($('#results'));
+				var resultList = $('<ul>').addClass('result-list');
 				for (var i = 0; i < curObjArray.length; i++) {
 					var imgItem = $('<li>');
+					var img = $('<img />').attr('id', 'img-' + i)
+						.attr('data-id', curObjArray[i].id)
+						.attr('src', curObjArray[i].images.fixed_height_still.url)
+						.attr('alt', topic + ' GIF')
+						.addClass('result-image');
 					var rating = $('<span>').attr('id', 'rating-' + curObjArray[i].id)
 						.addClass('rating-span')
 						.text('Rating: ' + curObjArray[i].rating.toUpperCase());
-					var img = $('<img />').attr('id', 'img-' + i)
-						.attr('data-id', curObjArray[i].id).attr('src', curObjArray[i].images.fixed_height_still.url)
-						.attr('alt', topic + ' GIF')
-						.addClass('result-image')
-						.appendTo($('#results'));
-					$('.result-list').append(imgItem.append(img).append(rating));
+					$('#results').append(resultList.append(imgItem.append(img).append(rating)));
 				}
 			})
 			.fail(function() {
 				$('#results').empty();
-				$('#results').html('<h2 class="well">ERROR: Unable to retrieve GIFs!</h2>');
+				$('.instructions').removeClass('hidden')
+					.html('<h2>ERROR: Unable to retrieve GIFs!</h2>');
 			});
 	}
 }
@@ -112,7 +113,7 @@ $(function() {
 	createButtons(topics);
 
 	$('body').on('click', '.topic', function() {
-		getGifs($(this).attr('data-value'));
+		getGIFs($(this).attr('data-value'));
 	});
 
 	$('body').on('click', '.result-image', function() {

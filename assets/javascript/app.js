@@ -21,7 +21,7 @@ function getGifs(topic) {
     }
   }
 
-  // don't call API if user clicks same button multiple times in succession
+  // don't call API over and over if user clicks same button multiple times in succession
   if (curTopic != topic) {
     $.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=10')
       .done(function(result) {
@@ -31,10 +31,10 @@ function getGifs(topic) {
         $('#results').empty();
 
         $('<ul>').addClass('result-list').appendTo($('#results'));
-        for (var i = 0; i < result.data.length; i++) {
+        for (var i = 0; i < curObjArray.length; i++) {
           var imgItem = $('<li>');
-          var rating = $('<span>').attr('id', 'rating-' + result.data[i].id).addClass('rating-span').text('Rating: ' + result.data[i].rating.toUpperCase());
-          var img = $('<img />').attr('id', 'img-' + i).attr('data-id', result.data[i].id).attr('src', result.data[i].images.fixed_height_still.url).attr('alt', topic + ' GIF').addClass('result-image').appendTo($('#results'));
+          var rating = $('<span>').attr('id', 'rating-' + curObjArray[i].id).addClass('rating-span').text('Rating: ' + curObjArray[i].rating.toUpperCase());
+          var img = $('<img />').attr('id', 'img-' + i).attr('data-id', curObjArray[i].id).attr('src', curObjArray[i].images.fixed_height_still.url).attr('alt', topic + ' GIF').addClass('result-image').appendTo($('#results'));
           $('.result-list').append(imgItem.append(img).append(rating));
         }
       })

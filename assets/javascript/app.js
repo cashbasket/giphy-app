@@ -14,7 +14,7 @@ function createButtons(topicArray) {
 	lastItem = topicArray[topicArray.length - 1];
 }
 
-function getGIFs(topic) {
+function getGIFs(topic, limit) {
 	//un-pulsate the new buttons, if applicable
 	for (var i = 0; i < topics.length; i++) {
 		if (topics[i] === lastItem) {
@@ -24,7 +24,7 @@ function getGIFs(topic) {
 
 	//don't make an API call over and over if user clicks same button multiple times in succession
 	if (curTopic != topic) {
-		$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=10')
+		$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=' + limit)
 			.done(function(response) {
 				curTopic = topic;
 				curObjArray = response.data;
@@ -123,7 +123,7 @@ $(function() {
 	createButtons(topics);
 
 	$('body').on('click', '.topic', function() {
-		getGIFs($(this).attr('data-value'));
+		getGIFs($(this).attr('data-value'), 10);
 	});
 
 	$('body').on('click', '.result-image', function() {

@@ -14,10 +14,6 @@ function createButtons(topicArray) {
 }
 
 function getGIFs(topic, limit) {
-	//un-pulsate the new buttons, if applicable
-	$('#button-' + (topics.length - 1)).removeClass('pulsate');
-
-	//don't make an API call over and over if user clicks same button multiple times in succession
 	if (curTopic != topic) {
 		$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=' + limit)
 			.done(function (response) {

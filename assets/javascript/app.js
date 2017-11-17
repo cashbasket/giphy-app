@@ -30,7 +30,7 @@ function getGifs(topic) {
 				curObjArray = result.data;
 				$('.instructions').removeClass('hidden');
 				$('#results').empty();
-
+				
 				$('<ul>').addClass('result-list').appendTo($('#results'));
 				for (var i = 0; i < curObjArray.length; i++) {
 					var imgItem = $('<li>');

@@ -75,7 +75,7 @@ function addTopic(value) {
 	}
 
 	if (!alreadyAdded && value.trim().length > 0) {
-		topics.push(value);
+		topics.push(value.toLowerCase().trim());
 		$('#buttons').empty();
 		createButtons(topics);
 		lastItem = topics[topics.length - 1];

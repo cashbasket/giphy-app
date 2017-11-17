@@ -50,6 +50,7 @@ function getGIFs(topic, limit) {
 				$('#results').empty();
 				$('.instructions').removeClass('hidden')
 					.html('<h2>ERROR: Unable to retrieve GIFs!</h2>');
+				doh();
 			});
 	}
 }
@@ -116,6 +117,11 @@ function addTopic(value) {
 	setTimeout(function() {
 		$('#formMessage').addClass('hidden');
 	}, 6000);
+}
+
+function doh() {
+	var audio = document.getElementById('audio');
+	audio.play();
 }
 
 $(function() {

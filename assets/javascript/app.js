@@ -69,7 +69,7 @@ function toggleAnimation(id) {
 
 function addTopic(value) {
 	var alreadyAdded = false;
-	$('#formError').addClass('hidden').text('');
+	$('#formMessage').addClass('hidden').text('');
 	for (var i = 0; i < topics.length; i++) {
 		if (topics[i].toLowerCase() === value.toLowerCase().trim()) {
 			alreadyAdded = true;
@@ -80,6 +80,9 @@ function addTopic(value) {
 	if (!alreadyAdded && value.trim().length > 0) {
 		topics.push(value.toLowerCase().trim());
 		$('#buttons').empty();
+		$('#formMessage').removeClass('hidden')
+			.addClass('green')
+			.text('Topic added successfully!');
 		createButtons(topics);
 		lastItem = topics[topics.length - 1];
 
@@ -89,7 +92,6 @@ function addTopic(value) {
 				$('#button-' + j).addClass('pulsate');
 			}
 		}
-		$('#input').val('');
 	} else if (alreadyAdded) {
 		var topicIndex;
 		for (var k = 0; k < topics.length; k++) {
@@ -102,10 +104,18 @@ function addTopic(value) {
 		setTimeout(function() {
 			$('#button-' + topicIndex).removeClass('pulsate');
 		}, 6000);
-		$('#formError').removeClass('hidden').text('That topic already exists.');
+		$('#formMessage').removeClass('hidden green')
+			.text('That topic already exists.')
+			.addClass('red');
 	} else if (value.trim().length === 0) {
-		$('#formError').removeClass('hidden').text('Please enter a topic.');
+		$('#formMessage').removeClass('hidden green')
+			.text('Please enter a topic.')
+			.addClass('red');
 	}
+	$('#input').val('');
+	setTimeout(function() {
+		$('#formMessage').addClass('hidden');
+	}, 6000);
 }
 
 $(function() {

@@ -28,9 +28,10 @@ function getGifs(topic) {
 			.done(function(result) {
 				curTopic = topic;
 				curObjArray = result.data;
+				$('#currentTopic').text(curTopic);
 				$('.instructions').removeClass('hidden');
 				$('#results').empty();
-				
+
 				$('<ul>').addClass('result-list').appendTo($('#results'));
 				for (var i = 0; i < curObjArray.length; i++) {
 					var imgItem = $('<li>');

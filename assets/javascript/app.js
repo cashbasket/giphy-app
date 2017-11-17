@@ -1,14 +1,15 @@
+/*eslint-env jquery*/
 var apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
 var topics = ['homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz', 'super nintendo chalmers', 'treehouse of horror'];
 var lastItem, curObjArray, curTopic;
 
 function createButtons(topicArray) {
 	for (var i = 0; i < topicArray.length; i++) {
-	$('<button />').attr('id', 'button-' + i)
-		.attr('data-value', topicArray[i])
-		.addClass('btn btn-option topic')
-		.prepend(topicArray[i])
-		.appendTo($('#buttons'));
+		$('<button />').attr('id', 'button-' + i)
+			.attr('data-value', topicArray[i])
+			.addClass('btn btn-option topic')
+			.prepend(topicArray[i])
+			.appendTo($('#buttons'));
 	}
 	lastItem = topicArray[topicArray.length - 1];
 }
@@ -21,33 +22,33 @@ function getGifs(topic) {
 		}
 	}
 
-  // don't make an API call over and over if user clicks same button multiple times in succession
-  if (curTopic != topic) {
-    $.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=10')
-		.done(function(result) {
-			curTopic = topic;
-			curObjArray = result.data;
-			$('.instructions').removeClass('hidden');
-			$('#results').empty();
+	// don't make an API call over and over if user clicks same button multiple times in succession
+	if (curTopic != topic) {
+		$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=10')
+			.done(function(result) {
+				curTopic = topic;
+				curObjArray = result.data;
+				$('.instructions').removeClass('hidden');
+				$('#results').empty();
 
-			$('<ul>').addClass('result-list').appendTo($('#results'));
-			for (var i = 0; i < curObjArray.length; i++) {
-				var imgItem = $('<li>');
-				var rating = $('<span>').attr('id', 'rating-' + curObjArray[i].id)
-					.addClass('rating-span')
-					.text('Rating: ' + curObjArray[i].rating.toUpperCase());
-				var img = $('<img />').attr('id', 'img-' + i)
-					.attr('data-id', curObjArray[i].id).attr('src', curObjArray[i].images.fixed_height_still.url)
-					.attr('alt', topic + ' GIF')
-					.addClass('result-image')
-					.appendTo($('#results'));
-				$('.result-list').append(imgItem.append(img).append(rating));
-			}
-		})
-		.fail(function(error) {
-			$('#results').empty();
-			$('#results').html('<h2 class="well">ERROR: Unable to retrieve GIFs!</h2>');
-		});
+				$('<ul>').addClass('result-list').appendTo($('#results'));
+				for (var i = 0; i < curObjArray.length; i++) {
+					var imgItem = $('<li>');
+					var rating = $('<span>').attr('id', 'rating-' + curObjArray[i].id)
+						.addClass('rating-span')
+						.text('Rating: ' + curObjArray[i].rating.toUpperCase());
+					var img = $('<img />').attr('id', 'img-' + i)
+						.attr('data-id', curObjArray[i].id).attr('src', curObjArray[i].images.fixed_height_still.url)
+						.attr('alt', topic + ' GIF')
+						.addClass('result-image')
+						.appendTo($('#results'));
+					$('.result-list').append(imgItem.append(img).append(rating));
+				}
+			})
+			.fail(function() {
+				$('#results').empty();
+				$('#results').html('<h2 class="well">ERROR: Unable to retrieve GIFs!</h2>');
+			});
 	}
 }
 
@@ -80,20 +81,20 @@ function addTopic(value) {
 		createButtons(topics);
 		lastItem = topics[topics.length - 1];
 
-		for (var i = 0; i < topics.length; i++) {
-			$('#button-' + i).removeClass('pulsate');
-			if (topics[i] === lastItem) {
-			$('#button-' + i).addClass('pulsate');
+		for (var j = 0; j < topics.length; j++) {
+			$('#button-' + j).removeClass('pulsate');
+			if (topics[j] === lastItem) {
+				$('#button-' + j).addClass('pulsate');
 			}
 		}
 		$('#input').val('');
 	} else if (alreadyAdded) {
 		var topicIndex;
-		for (var i = 0; i < topics.length; i++) {
-			$('#button-' + i).removeClass('pulsate');
-			if (topics[i].toLowerCase() === value.trim().toLowerCase()) {
-			$('#button-' + i).addClass('pulsate');
-			topicIndex = i;
+		for (var k = 0; k < topics.length; k++) {
+			$('#button-' + k).removeClass('pulsate');
+			if (topics[k].toLowerCase() === value.trim().toLowerCase()) {
+				$('#button-' + k).addClass('pulsate');
+				topicIndex = k;
 			}
 		}
 		setTimeout(function() {

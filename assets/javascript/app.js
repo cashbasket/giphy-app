@@ -68,7 +68,7 @@ function addTopic(value) {
 	var alreadyAdded = false;
 	$('#formError').addClass('hidden').text('');
 	for (var i = 0; i < topics.length; i++) {
-		if (topics[i] === value.trim()) {
+		if (topics[i].toLowerCase() === value.toLowerCase().trim()) {
 			alreadyAdded = true;
 			break;
 		}
@@ -91,7 +91,7 @@ function addTopic(value) {
 		var topicIndex;
 		for (var i = 0; i < topics.length; i++) {
 			$('#button-' + i).removeClass('pulsate');
-			if (topics[i] === value.trim()) {
+			if (topics[i].toLowerCase() === value.trim().toLowerCase()) {
 			$('#button-' + i).addClass('pulsate');
 			topicIndex = i;
 			}

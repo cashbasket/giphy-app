@@ -148,7 +148,7 @@ input {
 }
 
 .result-list {
- 	 list-style-type: none;
+ 	list-style-type: none;
 }
 
 .result-list>li {
@@ -162,9 +162,14 @@ input {
 }
 
 .result-image {
-  	cursor: pointer;
+	cursor: pointer;
+	/* width: 292.5px;
+	height: auto; */
 }
 
+.list-item {
+	top: 0;
+}
 .rating-span {
 	color: #000;
 	display: block;

@@ -2,6 +2,7 @@
 var apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
 var topics = ['homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz', 'super nintendo chalmers', 'treehouse of horror'];
 var curObjArray, curTopic;
+// var lefts = [0, 292.5, 585, 877.5];
 
 function createButtons(topicArray) {
 	for (var i = 0; i < topicArray.length; i++) {
@@ -22,10 +23,13 @@ function getGIFs(topic, limit) {
 				$('#currentTopic').text(curTopic);
 				$('.instructions').removeClass('hidden');
 				$('#results').empty();
-
+				// var lastInColHeight = 0;
+				// var lastInColTop = 85;
+				// var lastInColImgHeight;
+				// var lastLeft;
 				var resultList = $('<ul>').addClass('result-list');
 				for (var i = 0; i < curObjArray.length; i++) {
-					var imgItem = $('<li>');
+					var imgItem = $('<li>').attr('id', 'item-' + i).attr('style', 'top: 0').addClass('list-item');
 					var img = $('<img />').attr('id', 'img-' + i)
 						.attr('data-id', curObjArray[i].id)
 						.attr('src', curObjArray[i].images.fixed_height_still.url)
@@ -35,6 +39,27 @@ function getGIFs(topic, limit) {
 						.addClass('rating-span')
 						.text('Rating: ' + curObjArray[i].rating.toUpperCase());
 					$('#results').append(resultList.append(imgItem.append(img).append(rating)));
+					
+					// if (i === 0 || i % 4 === 0) {
+					// 	lastLeft = lefts[0];
+					// } else if (i % 2 === 1 && i % 3 !== 0) {
+					// 	lastLeft = lefts[1];
+					// } else if (i % 4 === 2) {
+					// 	lastLeft = lefts[2];
+					// } else if (i % 2 !== 1 && i % 3 === 0) {
+					// 	lastLeft = lefts[3];
+					// }
+
+					// if(i >= 4) {
+
+					// 	lastInColHeight = $('#item-' + (i - 4)).outerHeight();
+					// 	lastInColImgHeight = curObjArray[i - 4].images.fixed_height_still.height.split('p')[0];
+					// 	lastInColTop = $('#item-' + (i - 4)).css('top').split('p')[0];
+					// 	$('#item-' + i).attr('style', 'position: absolute; left: ' + lastLeft + 'px; top: ' + (parseInt(lastInColImgHeight) + parseInt(lastInColHeight) + parseInt(lastInColTop) + 15) + 'px');
+					// } else {
+					// 	lastInColHeight = $('#item-' + i).outerHeight();
+					// 	$('#item-' + i).attr('style', 'position: absolute; left: ' + lastLeft + 'px; top: ' + parseInt(lastInColTop) + 'px');
+					// }
 				}
 			})
 			.fail(function () {

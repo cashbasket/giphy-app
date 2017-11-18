@@ -42,15 +42,7 @@ function getGIFs(topic, limit) {
 						.text('Rating: ' + curObjArray[i].rating.toUpperCase());
 					$('#results').append(resultList.append(imgItem.append(imgDiv.append(dummyImg).append(img)).append(rating)));
 
-					if (i === 0 || (i && (i % 4 === 0))) {
-						lastLeft = columnLefts[0];
-					} else if (i && (i % 4 === 1)) {
-						lastLeft = columnLefts[1];
-					} else if (i && (i % 4 === 2)) {
-						lastLeft = columnLefts[2];
-					} else if (i && (i % 4 === 3)) {
-						lastLeft = columnLefts[3];
-					}
+					lastLeft = columnLefts[i % 4];
 
 					if(i >= 4) {
 						lastInColHeight = $('#item-' + (i - 4)).outerHeight(true);

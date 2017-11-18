@@ -34,6 +34,7 @@ function getGIFs(topic, limit) {
 						.attr('height', curObjArray[i].images.original_still.height * (gifWidth / curObjArray[i].images.original_still.width));
 					var img = $('<img />').attr('id', 'img-' + i)
 						.attr('src', curObjArray[i].images.original_still.url)
+						.attr('data-state', 'still')
 						.attr('alt', curObjArray[i].title)
 						.addClass('result-image hidden');
 					var rating = $('<span>').attr('id', 'rating-' + curObjArray[i].id)
@@ -81,12 +82,12 @@ function toggleAnimation(id) {
 	var idSplit = id.split('-');
 	var pos = idSplit.pop();
 
-	if ($('#' + id).attr('class') === 'result-image animated') {
-		$('#' + id).attr('src', curObjArray[pos].images.fixed_height_still.url)
-			.removeClass('animated');
+	if ($('#' + id).attr('data-state') === 'animated') {
+		$('#' + id).attr('src', curObjArray[pos].images.original_still.url)
+			.attr('data-state', 'still');
 	} else {
-		$('#' + id).attr('src', curObjArray[pos].images.fixed_height.url)
-			.addClass('animated');
+		$('#' + id).attr('src', curObjArray[pos].images.original.url)
+			.attr('data-state', 'animated');
 	}
 }
 

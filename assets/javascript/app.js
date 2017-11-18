@@ -1,6 +1,6 @@
 var apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
 var topics = ['homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz', 'super nintendo chalmers', 'treehouse of horror'];
-var curObjArray, curTopic;
+var curTopic;
 var columnLefts = [0, 287.5, 580, 872.5];
 var gifWidth = 270;
 
@@ -19,27 +19,29 @@ function getGIFs(topic, limit) {
 		$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=' + limit)
 			.done(function (response) {
 				curTopic = topic;
-				curObjArray = response.data;
+				var result = response.data;
 				$('#currentTopic').text(curTopic);
 				$('.instructions').removeClass('hidden');
 				$('#results').empty();
 				var lastInColHeight, lastInColTop, lastLeft;
 				var resultList = $('<ul>').addClass('result-list');
-				for (var i = 0; i < curObjArray.length; i++) {
+				for (var i = 0; i < result.length; i++) {
 					var imgItem = $('<li>').attr('id', 'item-' + i)
 						.attr('style', 'top: 0')
 						.addClass('list-item');
 					var imgDiv = $('<div>').attr('id', 'imgDiv-' + i);
 					var dummyImg = $('<img src="assets/images/blank.gif" width="270" />').attr('id', 'dummy-' + i)
-						.attr('height', curObjArray[i].images.original_still.height * (gifWidth / curObjArray[i].images.original_still.width));
+						.attr('height', result[i].images.original_still.height * (gifWidth / result[i].images.original_still.width));
 					var img = $('<img />').attr('id', 'img-' + i)
-						.attr('src', curObjArray[i].images.original_still.url)
+						.attr('src', result[i].images.original_still.url)
+						.attr('data-still', result[i].images.original_still.url)
+						.attr('data-animated', result[i].images.original.url)
 						.attr('data-state', 'still')
-						.attr('alt', curObjArray[i].title)
+						.attr('alt', result[i].title)
 						.addClass('result-image hidden');
-					var rating = $('<span>').attr('id', 'rating-' + curObjArray[i].id)
+					var rating = $('<span>').attr('id', 'rating-' + result[i].id)
 						.addClass('rating-span')
-						.text('Rating: ' + curObjArray[i].rating.toUpperCase());
+						.text('Rating: ' + result[i].rating.toUpperCase());
 					$('#results').append(resultList.append(imgItem.append(imgDiv.append(dummyImg).append(img)).append(rating)));
 
 					lastLeft = columnLefts[i % 4];
@@ -75,10 +77,10 @@ function toggleAnimation(id) {
 	var pos = idSplit.pop();
 
 	if ($('#' + id).attr('data-state') === 'animated') {
-		$('#' + id).attr('src', curObjArray[pos].images.original_still.url)
+		$('#' + id).attr('src', $('#' + id).attr('data-still'))
 			.attr('data-state', 'still');
 	} else {
-		$('#' + id).attr('src', curObjArray[pos].images.original.url)
+		$('#' + id).attr('src', $('#' + id).attr('data-animated'))
 			.attr('data-state', 'animated');
 	}
 }

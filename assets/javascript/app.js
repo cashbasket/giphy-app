@@ -42,7 +42,7 @@ function getGIFs(topic, limit) {
 						.text('Rating: ' + curObjArray[i].rating.toUpperCase());
 					$('#results').append(resultList.append(imgItem.append(imgDiv.append(dummyImg).append(img)).append(rating)));
 
-					if (i && (i % 4 === 0)) {
+					if (i === 0 || (i && (i % 4 === 0))) {
 						lastLeft = columnLefts[0];
 					} else if (i && (i % 4 === 1)) {
 						lastLeft = columnLefts[1];
@@ -53,12 +53,12 @@ function getGIFs(topic, limit) {
 					}
 
 					if(i >= 4) {
-						lastInColHeight = $('#item-' + (i - 4)).outerHeight();
+						lastInColHeight = $('#item-' + (i - 4)).outerHeight(true);
 						lastInColTop = $('#item-' + (i - 4)).css('top').split('p')[0];
-						$('#item-' + i).attr('style', 'position: absolute; left: ' + lastLeft + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + 15) + 'px');
+						$('#item-' + i).attr('style', 'position: absolute; left: ' + lastLeft + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + 'px'));
 					} else {
-						lastInColHeight = $('#item-' + i).outerHeight();
-						lastInColTop = $('.instructions').outerHeight() + 15;
+						lastInColHeight = $('#item-' + i).outerHeight(true);
+						lastInColTop = $('.instructions').outerHeight(true);
 						$('#item-' + i).attr('style', 'position: absolute; left: ' + lastLeft + 'px; top: ' + parseInt(lastInColTop) + 'px');
 					}
 					

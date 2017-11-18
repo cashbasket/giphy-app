@@ -13,62 +13,51 @@
 	<link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed:400,700" rel="stylesheet">
 </head>
 
-<body class="site">
+<body>
 	<audio id="audio" src="assets/wav/doh.wav" preload="auto"></audio>
-	<div class="container site-content clearfix">
-		<img class="title-image img-responsive" src="assets/images/title.png" alt="Simpsons GIFs title image" />
-		<h1 class="sr-only">Simpsons.gif</h1>
-		<div class="row">
-			<div class="col-md-8">
-				<h2>Choose a topic:</h2>
-				<div id="buttons"></div>
-			</div>
-			<div class="col-md-4">
-				<aside id="addTopics" class="add-well">
-					<form id="form" class="form-inline">
-						<label for="input">Create a New, Simpsons-y Topic:</label><br>
-						<input type="text" id="input" placeholder="e.g. comic book guy" class="form-input" required />
-						<button id="submit" type="submit" class="btn btn-success">Add Topic</button>
-						<div id="formMessage" class="form-message hidden"></div>
-					</form>
-				</aside>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="instructions hidden">
-					<h2>Results for "<span id="currentTopic"></span>"</h2>
-					<p>(Click on an image to make it animate)</p>
-				</div>
-				<div id="results" class="clearfix"></div>
-			</div>
+	<div class="about clearfix">
+		<div class="about-container">
+			<div class="about-text">Created by Ryan Machan and powered by <a href="https://giphy.com" target="_blank">GIPHY</a>.</div>
+			<ul class="social">
+				<li>
+					<a href="mailto:rjm21@case.edu"><i class="fa fa-envelope"></i></a>
+				</li>
+				<li>
+					<a href="http://www.github.com/cashbasket" target="_blank"><i class="fa fa-github"></i></a>
+				</li>
+				<li>
+					<a href="https://stackoverflow.com/users/8508714/cashbasket" target="_blank"><i class="fa fa-stack-overflow"></i></a>
+				</li>
+				<li>
+					<a href="https://www.linkedin.com/in/ryan-machan-27a404148/" target="_blank"><i class="fa fa-linkedin"></i></a>
+				</li>
+			</ul>
 		</div>
 	</div>
-	<footer>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6">
-					<div class="footer-text">Created by Ryan Machan and powered by <a href="https://giphy.com" target="_blank">GIPHY</a>.</div>
-				</div>
-				<div class="col-md-6">
-					<ul class="social">
-						<li>
-							<a href="mailto:rjm21@case.edu"><i class="fa fa-envelope"></i></a>
-						</li>
-						<li>
-							<a href="http://www.github.com/cashbasket" target="_blank"><i class="fa fa-github"></i></a>
-						</li>
-						<li>
-							<a href="https://stackoverflow.com/users/8508714/cashbasket" target="_blank"><i class="fa fa-stack-overflow"></i></a>
-						</li>
-						<li>
-							<a href="https://www.linkedin.com/in/ryan-machan-27a404148/" target="_blank"><i class="fa fa-linkedin"></i></a>
-						</li>
-					</ul>
-				</div>
-			</div>
+	<div class="content-container site-content clearfix">
+		<img class="title-image img-responsive" src="assets/images/title.png" alt="Simpsons GIFs title image" />
+		<h1 class="sr-only">Simpsons.gif</h1>
+		
+		<div id="top" class="clearfix">
+			<h2>Choose a topic:</h2>
+			<div id="buttons" class="button-div"></div>
+			<aside id="addTopics" class="add-well">
+				<form id="form" class="form-inline">
+					<label for="input">Create a New, Simpsons-y Topic:</label><br>
+					<input type="text" id="input" placeholder="e.g. comic book guy" class="form-input" required />
+					<button id="submit" type="submit" class="btn btn-success">Add Topic</button>
+					<div id="formMessage" class="form-message hidden"></div>
+				</form>
+			</aside>
 		</div>
-	</footer>
+		<div class="contents">
+			<div class="instructions hidden">
+				<h2>Results for "<span id="currentTopic"></span>"</h2>
+				<p>(Click on an image to make it animate)</p>
+			</div>
+			<div id="results" class="clearfix"></div>
+		</div>
+	</div>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="assets/javascript/app.js"></script>
 </body>

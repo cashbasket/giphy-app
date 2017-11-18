@@ -31,15 +31,13 @@ body {
 	font-size: 16px;
 }
 
-.site {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
+.content-container {
+	margin: 0 auto;
+	width: 1160px;
 }
 
-.site-content {
-	flex: 1;
-	padding: 20px 0;
+.contents {
+	position: relative;
 }
 
 h1 {
@@ -95,7 +93,7 @@ input {
 	background-color: #c5e2ec;
 	border: 1px solid #000;
 	border-radius: 5px;
-	margin: 10px 5px;
+	margin: 10px 0;
 	padding: 10px 5px;
 	text-align: center;
 }
@@ -138,12 +136,17 @@ input {
 	text-decoration: none;
 }
 
+.button-div {
+	float: left;
+	width: 773.31px;
+}
+
 .add-well {
 	background-color: #333;
 	border: 2px solid #fff;
 	border-radius: 5px;
 	color: #fff;
-	margin-top: 39px;
+	float: right;
 	padding: 15px;
 }
 
@@ -159,17 +162,22 @@ input {
 	margin: 5px;
 	padding: 5px;
 	text-align: center;
+	width: 282px;
+}
+
+.result-list>li:nth-child(4n) {
+	margin: 5px 0 5px 5px;
+}
+.result-list>li:nth-child(4n + 1) {
+	margin: 5px 5px 5px 0;
 }
 
 .result-image {
 	cursor: pointer;
-	/* width: 292.5px;
-	height: auto; */
+	height: auto;
+	width: 100%;
 }
 
-.list-item {
-	top: 0;
-}
 .rating-span {
 	color: #000;
 	display: block;
@@ -192,21 +200,31 @@ input {
 	display: block;
 }
 
-footer {
+.about {
 	background-color: #2980b9;
-	border-top: 2px solid #fffdf4;
+	border-bottom: 2px solid #fffdf4;
 	color: #fff;
 	padding: 10px;
+	margin-bottom: 20px;
 }
 
-footer a {
+.about-container {
+	margin: 0 auto;
+	width: 1160px;
+}
+
+.about-text{
+	float: left;
+}
+
+.about a {
 	color: #fff;
 	text-decoration: underline;
 }
 
-footer a:hover,
-footer a:active,
-footer a:focus {
+.about a:hover,
+.about a:active,
+.about a:focus {
  	color: #f9db45;
 }
 
@@ -233,24 +251,4 @@ footer a:focus {
 
 .social li:last-of-type {
 	margin-right: 0;
-}
-
-@media screen and (max-width: 992px) {
-	footer {
-		line-height: 1.5;
-		text-align: center;
-	}
-	.social {
-		display: block;
-		float: left;
-		left: 50%;
-		list-style: none;
-		position: relative;
-	}
-	.social li {
-		display: block;
-		float: left;
-		position: relative;
-		right: 50%;
-	}
 }

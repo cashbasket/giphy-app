@@ -63,12 +63,10 @@ function getGIFs(topic, limit) {
 					}
 					
 					$('#img-' + i).on('load', function() {
-						var i = $(this).attr('id').split('-')[1];
+						var curIndex = $(this).attr('id').split('-')[1];
 						$(this).removeClass('hidden');
-						$('#dummy-' + i).addClass('hidden');
+						$('#dummy-' + curIndex).addClass('hidden');
 					});
-
-					console.log(curObjArray);
 				}
 			})
 			.fail(function () {

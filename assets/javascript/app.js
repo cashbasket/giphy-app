@@ -35,7 +35,7 @@ function getGIFs(topic, limit) {
 						.attr('height', curObjArray[i].images.original_still.height * (gifWidth / curObjArray[i].images.original_still.width));
 					var img = $('<img />').attr('id', 'img-' + i)
 						.attr('src', curObjArray[i].images.original_still.url)
-						.attr('alt', topic + ' GIF')
+						.attr('alt', curObjArray[i].title)
 						.addClass('result-image hidden');
 					var rating = $('<span>').attr('id', 'rating-' + curObjArray[i].id)
 						.addClass('rating-span')

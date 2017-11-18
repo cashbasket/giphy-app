@@ -73,9 +73,6 @@ function getGIFs(topic, limit) {
 }
 
 function toggleAnimation(id) {
-	var idSplit = id.split('-');
-	var pos = idSplit.pop();
-
 	if ($('#' + id).attr('data-state') === 'animated') {
 		$('#' + id).attr('src', $('#' + id).attr('data-still'))
 			.attr('data-state', 'still');

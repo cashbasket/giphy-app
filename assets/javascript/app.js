@@ -8,14 +8,16 @@ var curTopic;
 var toPreload = [];
 
 // global constants
+const containerWidth = $('.container').width();
+const asideWidth = $('.add-well').outerWidth();
+const itemPadding = parseInt($('.result-list > li').css('padding').split('p')[0]);
+const itemBorder = parseInt($('.result-list > li').css('border').split('p')[0]);
 const numCols = 4;
 const gutterWidth = 10;
 const apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
 
-// global math stuff for making life easier
-const itemPadding = parseInt($('.result-list > li').css('padding').split('p')[0]);
-const itemBorder = parseInt($('.result-list > li').css('border').split('p')[0]);
-const colWidth = (($('.container').width() - (gutterWidth * (numCols - 1))) / numCols);
+// global math stuff for making life easier (if I want to change container width, all I have to do us update its width in the css)
+const colWidth = (containerWidth - (gutterWidth * (numCols - 1))) / numCols;
 const gifWidth = colWidth - (itemPadding * 2) - (itemBorder * 2);
 var columnLefts = [];
 
@@ -23,6 +25,9 @@ var columnLefts = [];
 for(var i = 0; i < numCols; i++) {
 	columnLefts.push((colWidth + gutterWidth) * i);
 }
+
+//since add topic form width is the same regardless of container size, we must set the width of the buttons div accordingly
+$('.button-div').css('width', parseInt(containerWidth - asideWidth - gutterWidth) + 'px');
 
 function createButtons(topicArray) {
 	for (var i = 0; i < topicArray.length; i++) {

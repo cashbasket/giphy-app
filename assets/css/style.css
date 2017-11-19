@@ -37,7 +37,7 @@ body {
 
 .container {
 	margin: 0 auto;
-	width: 1040px;
+	width: 1100px;
 }
 
 .contents {
@@ -169,7 +169,6 @@ input {
 
 .button-div {
 	float: left;
-	width: 700px;
 }
 
 .add-well {

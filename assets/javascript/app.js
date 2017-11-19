@@ -16,7 +16,7 @@ const numCols = 4;
 const gutterWidth = 10;
 const apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
 
-// global math stuff for making life easier (if I want to change container width, all I have to do us update its width in the css)
+// global math stuff for making life easier (if I want to change container width, all I have to do us update its width in the css and everything else inside the container will adjust accordingly)
 const colWidth = (containerWidth - (gutterWidth * (numCols - 1))) / numCols;
 const gifWidth = colWidth - (itemPadding * 2) - (itemBorder * 2);
 var columnLefts = [];

@@ -10,8 +10,8 @@ var toPreload = [];
 // global constants
 const containerWidth = $('.container').width();
 const asideWidth = $('.add-well').outerWidth();
-const itemPadding = parseInt($('.result-list > li').css('padding').split('p')[0]);
-const itemBorder = parseInt($('.result-list > li').css('border').split('p')[0]);
+const itemPadding = parseInt($('.result-list > li').css('padding-left'));
+const itemBorder = $('.result-list > li').css('border-left-width').split('p')[0];
 const numCols = 4;
 const gutterWidth = 10;
 const apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
@@ -70,10 +70,11 @@ function getGIFs(topic, limit) {
 						.attr('style', 'top: 0')
 						.addClass('list-item');
 					var imgDiv = $('<div class="img-div">').attr('id', 'imgDiv-' + i)
-						.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight);
+						.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px');
 					//to make sure the final height of the <li> is calculated correctly, we must load the <li> with an empty placeholder image set to the height of the actual image (which might not load before the height is calculated)
 					var dummyImg = $('<img src="assets/images/blank.gif" width="100%" />').attr('id', 'dummy-' + i)
-						.attr('height',  adjustedHeight);
+						.attr('height',  adjustedHeight + 'px')
+						.addClass('dummy');
 					var img = $('<img />').attr('id', 'img-' + i)
 						.attr('src', result.images.original_still.url)
 						.attr('data-still', result.images.original_still.url)
@@ -104,7 +105,7 @@ function getGIFs(topic, limit) {
 						lastInColTop = gutterWidth * 2;
 						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + parseInt(lastInColTop) + 'px');
 					}
-					
+
 					$('#img-' + i).on('load', function() {
 						var curIndex = $(this).attr('id').split('-')[1];
 						$(this).fadeIn();

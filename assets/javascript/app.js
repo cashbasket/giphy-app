@@ -45,7 +45,7 @@ function getGIFs(topic, limit) {
 			.done(function (response) {
 				$('.topic').removeClass('btn-selected');
 				curTopic = topic;
-				for (var t = 0; t < topics.length; i++) {
+				for (var t = 0; t < topics.length; t++) {
 					if ($('#button-' + t).text() == curTopic) {
 						$('#button-' + t).addClass('btn-selected');
 						break;

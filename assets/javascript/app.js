@@ -3,11 +3,14 @@ var topics = ['the simpsons', 'homer simpson', 'bart simpson', 'lisa simpson', '
 var curTopic;
 var toPreload = [];
 
-// math stuff
+// global math stuff for making life easier
 var numCols = 4;
 var colMargin = 10;
 var colWidth = (($('.content-container').width() - (colMargin * 3)) / numCols);
-var columnLefts = [0, colWidth + colMargin, (colWidth + colMargin) * 2, (colWidth + colMargin) * 3];
+var columnLefts = [];
+for(var i = 0; i < numCols; i++) {
+	columnLefts.push((colWidth + colMargin) * i);
+}
 var gifWidth = colWidth - 12;  // padding on both sides + border on both sides = 12
 
 function createButtons(topicArray) {
@@ -56,7 +59,7 @@ function getGIFs(topic, limit) {
 						.text('Rating: ' + result.rating.toUpperCase());
 					$('#results').append(resultList.append(imgItem.append(imgDiv.append(dummyImg).append(img)).append(rating)));
 
-					lastLeft = columnLefts[i % 4];
+					lastLeft = columnLefts[i % numCols];
 
 					if(i >= 4) {
 						lastInColHeight = $('#item-' + (i - 4)).outerHeight(true);

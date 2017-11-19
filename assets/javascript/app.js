@@ -64,15 +64,16 @@ function getGIFs(topic, limit) {
 				
 				for (var i = 0; i < results.length; i++) {
 					var result = results[i];
+					var adjustedHeight = result.images.original_still.height * (gifWidth / result.images.original_still.width);
 					topicGIFs.push(result.images.original.url);
 					var imgItem = $('<li>').attr('id', 'item-' + i)
 						.attr('style', 'top: 0')
 						.addClass('list-item');
 					var imgDiv = $('<div class="img-div">').attr('id', 'imgDiv-' + i)
-						.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  result.images.original_still.height * (gifWidth / result.images.original_still.width));
-					//to make sure the final height of the <li> is calculated correctly, we must load the <li> with an empty placeholder image set to the exact height of the actual image (which might not load before the height is calculated)
+						.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight);
+					//to make sure the final height of the <li> is calculated correctly, we must load the <li> with an empty placeholder image set to the height of the actual image (which might not load before the height is calculated)
 					var dummyImg = $('<img src="assets/images/blank.gif" width="100%" />').attr('id', 'dummy-' + i)
-						.attr('height',  result.images.original_still.height * (gifWidth / result.images.original_still.width));
+						.attr('height',  adjustedHeight);
 					var img = $('<img />').attr('id', 'img-' + i)
 						.attr('src', result.images.original_still.url)
 						.attr('data-still', result.images.original_still.url)

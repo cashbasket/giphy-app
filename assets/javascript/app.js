@@ -108,9 +108,10 @@ function toggleAnimation(btnId) {
 function addTopic(value) {
 	var alreadyAdded = false;
 	var topicIndex = 0;
+	var formattedValue = value.trim().toLowerCase();
 	$('#formMessage').addClass('hidden').text('');
 	for (var i = 0; i < topics.length; i++) {
-		if (topics[i].toLowerCase() === value.toLowerCase().trim()) {
+		if (topics[i].toLowerCase() === formattedValue) {
 			$('#button-' + i).addClass('pulsate');
 			topicIndex = i;
 			$('#formMessage').removeClass('hidden green')
@@ -121,8 +122,8 @@ function addTopic(value) {
 		}
 	}
 
-	if (!alreadyAdded && value.trim().length > 0) {
-		topics.push(value.toLowerCase().trim());
+	if (!alreadyAdded && formattedValue.length > 0) {
+		topics.push(formattedValue);
 		$('#buttons').empty();
 		$('#formMessage').removeClass('hidden')
 			.addClass('green')
@@ -130,7 +131,7 @@ function addTopic(value) {
 		createButtons(topics);
 		$('#button-' + (topics.length - 1)).addClass('pulsate');
 
-	} else if (value.trim().length === 0) {
+	} else if (formattedValue.length === 0) {
 		$('#formMessage').removeClass('hidden green')
 			.text('Please enter a topic.')
 			.addClass('red');

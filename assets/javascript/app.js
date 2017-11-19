@@ -3,6 +3,7 @@ var topics = ['the simpsons', 'homer simpson', 'bart simpson', 'lisa simpson', '
 
 // initialize curTopic, which will store current topic
 var curTopic;
+var limit = 10;
 
 // array to hold in-memory image objects for the animated gifs for the currently selected topic (used for preloading images)
 var toPreload = [];
@@ -191,11 +192,15 @@ function doh() {
 	audio.play();
 }
 
-$(function () {
+function init() {
+	getGIFs(topics[0], limit);
 	createButtons(topics);
+}
 
+$(function () {
+	init();
 	$('body').on('click', '.topic', function () {
-		getGIFs($(this).attr('data-value'), 10);
+		getGIFs($(this).attr('data-value'), limit);
 	});
 
 	$('body').on('click', '.result-image', function () {

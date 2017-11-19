@@ -13,11 +13,13 @@ const colMargin = 10;
 const apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
 
 // global math stuff for making life easier
-var itemPadding = parseInt($('.result-list > li').css('padding').split('p')[0]);
-var itemBorder = parseInt($('.result-list > li').css('border').split('p')[0]);
-var colWidth = (($('.container').width() - (colMargin * (numCols - 1))) / numCols);
+const itemPadding = parseInt($('.result-list > li').css('padding').split('p')[0]);
+const itemBorder = parseInt($('.result-list > li').css('border').split('p')[0]);
+const colWidth = (($('.container').width() - (colMargin * (numCols - 1))) / numCols);
+const gifWidth = colWidth - (itemPadding * 2) - (itemBorder * 2);
 var columnLefts = [];
-var gifWidth = colWidth - (itemPadding * 2) - (itemBorder * 2);
+
+//populate columnLefts array, which will be used to determine the "left" css property for items in each column
 for(var i = 0; i < numCols; i++) {
 	columnLefts.push((colWidth + colMargin) * i);
 }

@@ -125,7 +125,7 @@ function getGIFs(topic, limit) {
 }
 
 function randomColor() {
-	var colors = ['#f9db45', '#333', '#98d9f9', '#5cb85c', '#ccc'];
+	var colors = ['#f9db45', '#98d9f9', '#999999', '#d5effc', '#000000', '#ff0000', '#00ff00', '#0000ff', '#00ffff', '#ff00ff'];
 	return colors[Math.floor(Math.random() * colors.length)];
 }
 

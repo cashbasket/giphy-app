@@ -1,8 +1,14 @@
 var apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
 var topics = ['homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz', 'super nintendo chalmers', 'treehouse of horror'];
 var curTopic;
-var columnLefts = [0, 287.5, 580, 872.5];
-var gifWidth = 270;
+var toPreload = [];
+
+// math stuff
+var numCols = 4;
+var colMargin = 10;
+var colWidth = (($('.content-container').width() - (colMargin * 3)) / numCols);
+var columnLefts = [0, colWidth + colMargin, (colWidth + colMargin) * 2, (colWidth + colMargin) * 3];
+var gifWidth = colWidth - 12;  // padding on both sides + border on both sides = 12
 
 function createButtons(topicArray) {
 	for (var i = 0; i < topicArray.length; i++) {
@@ -19,13 +25,17 @@ function getGIFs(topic, limit) {
 		$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=' + limit)
 			.done(function (response) {
 				curTopic = topic;
+				var topicGIFs = [];
 				var result = response.data;
+				var lastInColHeight, lastInColTop, lastLeft;
+				var resultList = $('<ul>').addClass('result-list');
+
 				$('#currentTopic').text(curTopic);
 				$('.instructions').removeClass('hidden');
 				$('#results').empty();
-				var lastInColHeight, lastInColTop, lastLeft;
-				var resultList = $('<ul>').addClass('result-list');
+				
 				for (var i = 0; i < result.length; i++) {
+					topicGIFs.push(result[i].images.original.url);
 					var imgItem = $('<li>').attr('id', 'item-' + i)
 						.attr('style', 'top: 0')
 						.addClass('list-item');
@@ -62,6 +72,7 @@ function getGIFs(topic, limit) {
 						$('#dummy-' + curIndex).addClass('hidden');
 					});
 				}
+				preloadTopicGIFs(topicGIFs);
 			})
 			.fail(function () {
 				$('#results').empty();
@@ -72,12 +83,22 @@ function getGIFs(topic, limit) {
 	}
 }
 
-function toggleAnimation(id) {
-	if ($('#' + id).attr('data-state') === 'animated') {
-		$('#' + id).attr('src', $('#' + id).attr('data-still'))
+//preload all the GIFs for the topic to speed things up a bit
+//(it was taking a long time for the animated GIFs to load after the still images were clicked)
+function preloadTopicGIFs(array) {
+	for (var i = 0; i < array.length; i++){
+		toPreload[i] = new Image();
+		toPreload[i].src = array[i];
+	}
+}
+
+function toggleAnimation(btnId) {
+	var btn = $('#' + btnId);
+	if (btn.attr('data-state') === 'animated') {
+		btn.attr('src', btn.attr('data-still'))
 			.attr('data-state', 'still');
 	} else {
-		$('#' + id).attr('src', $('#' + id).attr('data-animated'))
+		btn.attr('src', btn.attr('data-animated'))
 			.attr('data-state', 'animated');
 	}
 }
@@ -126,7 +147,6 @@ function doh() {
 }
 
 $(function () {
-	//create initial buttons
 	createButtons(topics);
 
 	$('body').on('click', '.topic', function () {

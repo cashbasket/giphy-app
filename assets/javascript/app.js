@@ -68,21 +68,25 @@ function getGIFs(topic, limit) {
 					var imgItem = $('<li>').attr('id', 'item-' + i)
 						.attr('style', 'top: 0')
 						.addClass('list-item');
-					var imgDiv = $('<div>').attr('id', 'imgDiv-' + i);
+					var imgDiv = $('<div class="img-div">').attr('id', 'imgDiv-' + i)
+						.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  result.images.original_still.height * (gifWidth / result.images.original_still.width));
 					//to make sure the final height of the <li> is calculated correctly, we must load the <li> with an empty placeholder image set to the exact height of the actual image (which might not load before the height is calculated)
 					var dummyImg = $('<img src="assets/images/blank.gif" width="100%" />').attr('id', 'dummy-' + i)
-						.attr('height', result.images.original_still.height * (gifWidth / result.images.original_still.width));
+						.attr('height',  result.images.original_still.height * (gifWidth / result.images.original_still.width));
 					var img = $('<img />').attr('id', 'img-' + i)
 						.attr('src', result.images.original_still.url)
 						.attr('data-still', result.images.original_still.url)
 						.attr('data-animated', result.images.original.url)
 						.attr('data-state', 'still')
 						.attr('alt', result.title)
-						.addClass('result-image hidden');
+						.addClass('result-image');
 					var rating = $('<span>').attr('id', 'rating-' + result.id)
 						.addClass('rating-span')
 						.text('Rating: ' + result.rating.toUpperCase());
 					$('#results').append(resultList.append(imgItem.append(imgDiv.append(dummyImg).append(img)).append(rating)));
+
+					// immediately hide gif so we can fade it in when loading is done
+					$('#img-' + i).hide();
 
 					// this determines the value of the "left" css property to be used (see global "columnLefts" array)
 					left = columnLefts[i % numCols];
@@ -103,7 +107,8 @@ function getGIFs(topic, limit) {
 					$('#img-' + i).on('load', function() {
 						var curIndex = $(this).attr('id').split('-')[1];
 						$(this).removeClass('hidden');
-						$('#dummy-' + curIndex).addClass('hidden');
+						$(this).fadeIn();
+						$('#dummy-' + curIndex).remove();
 					});
 				}
 				//preload all the GIFs for the topic to speed things up a bit (it was taking a long time for the animated GIFs to load after the still images were clicked)
@@ -116,6 +121,11 @@ function getGIFs(topic, limit) {
 				doh();
 			});
 	}
+}
+
+function randomColor() {
+	var colors = ['#f9db45', '#333', '#98d9f9', '#5cb85c', '#ccc'];
+	return colors[Math.floor(Math.random() * colors.length)];
 }
 
 function preloadTopicGIFs(array) {

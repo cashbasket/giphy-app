@@ -61,9 +61,9 @@ function getGIFs(topic, limit) {
 
 					lastLeft = columnLefts[i % numCols];
 
-					if(i >= 4) {
-						lastInColHeight = $('#item-' + (i - 4)).outerHeight(true);
-						lastInColTop = $('#item-' + (i - 4)).css('top').split('p')[0];
+					if(i > numCols - 1) {
+						lastInColHeight = $('#item-' + (i - numCols)).outerHeight(true);
+						lastInColTop = $('#item-' + (i - numCols)).css('top').split('p')[0];
 						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + lastLeft + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + 'px'));
 					} else {
 						lastInColHeight = $('#item-' + i).outerHeight(true);

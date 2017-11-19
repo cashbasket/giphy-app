@@ -43,14 +43,20 @@ function getGIFs(topic, limit) {
 	if (curTopic != topic) {
 		$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=' + limit)
 			.done(function (response) {
+				$('.topic').removeClass('btn-selected');
 				curTopic = topic;
+				for (var t = 0; t < topics.length; i++) {
+					if ($('#button-' + t).text() == curTopic) {
+						$('#button-' + t).addClass('btn-selected');
+						break;
+					}
+				}
 				var topicGIFs = [];
 				var results = response.data;
 				var lastInColHeight, lastInColTop, left;
 				var resultList = $('<ul>').addClass('result-list');
 
 				$('#currentTopic').text(curTopic);
-				$('.instructions').removeClass('hidden');
 				$('#results').empty();
 				
 				for (var i = 0; i < results.length; i++) {
@@ -87,7 +93,7 @@ function getGIFs(topic, limit) {
 						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + 'px'));
 					} else {
 						lastInColHeight = $('#item-' + i).outerHeight(true);
-						lastInColTop = $('.instructions').outerHeight(true);
+						lastInColTop = gutterWidth * 2;
 						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + parseInt(lastInColTop) + 'px');
 					}
 					

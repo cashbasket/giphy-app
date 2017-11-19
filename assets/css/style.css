@@ -1,18 +1,18 @@
 @keyframes pulsate {
 	0% {
-		background: #3498db;
-		border: 1px solid #fff;
-		color: #fff;
+		background: #f9db45;
+		border: 1px solid #333;
+		color: #333;
 	}
 	50% {
-		background: #fff;
-		border: 1px solid #3498db;
-		color: #3498db;
+		background: #333;
+		border: 1px solid #333;
+		color: #f9db45;
 	}
 	100% {
-		background: #3498db;
-		border: 1px solid #fff;
-		color: #fff;
+		background: #f9db45;
+		border: 1px solid #333;
+		color: #333;
 	}
 }
 
@@ -29,7 +29,7 @@
 }
 
 body {
-	background: #f9db45 url(../images/bg.jpg) fixed no-repeat;
+	background: #f9db45 url(../images/simpsons_clouds.jpg) fixed no-repeat;
 	background-size: cover;
 	font-family: 'Barlow Semi Condensed', sans-serif;
 	font-size: 16px;
@@ -53,7 +53,7 @@ h1 {
 }
 
 h2 {
-	color: #000;
+	color: #333;
 	font-size: 1.5em;
 	font-weight: bold;
 	margin-bottom: 10px;
@@ -89,11 +89,11 @@ input {
 
 .title-image {
 	display: block;
-	margin: 0 auto 10px auto;
+	margin: 30px auto 10px auto;
 }
 
 .instructions {
-	background-color: #c5e2ec;
+	background-color: #fde990;
 	border: 1px solid #000;
 	margin: 10px 0 5px 0;
 	padding: 10px 5px;
@@ -136,12 +136,12 @@ input {
 
 .btn-option {
 	background: #3498db;
-	background-image: linear-gradient(to bottom, #3498db, #2980b9);
-	border: 1px solid #fff;
-	color: #ffffff;
+	background-image: linear-gradient(to bottom, #f9db45, #e2c543);
+	border: 1px solid #333;
+	color: #333;
 	font-family: 'Arial', 'Helvetica', sans-serif;
 	font-size: 16px;
-	margin: 3px;
+	margin: 3px 6px 3px 0;
 	padding: 5px 10px;
 	text-decoration: none;
 }
@@ -160,11 +160,13 @@ input {
 	border: 1px solid #4c914c;
 }
 
-.btn-option:hover, .btn-option:active, .btn-option:focus {
-	background: #3cb0fd;
-	background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
-	color: #fff;
-	text-decoration: none;
+.btn-option:hover,
+.btn-option:active, 
+.btn-option:focus, 
+.btn-selected {
+	background: #333;
+	background-image: none;
+	color: #f9db45;
 }
 
 .button-div {
@@ -225,9 +227,9 @@ input {
 }
 
 .about {
-	background-color: #2980b9;
-	border-bottom: 2px solid #fffdf4;
-	color: #fff;
+	background-color: #f9db45;
+	border-bottom: 2px solid #fff;
+	color: #333;
 	padding: 10px;
 	margin-bottom: 20px;
 }
@@ -237,14 +239,14 @@ input {
 }
 
 .about a {
-	color: #fff;
+	color: #333;
 	text-decoration: underline;
 }
 
 .about a:hover,
 .about a:active,
 .about a:focus {
- 	color: #f9db45;
+ 	color: #333;
 }
 
 .social {
@@ -260,12 +262,12 @@ input {
 }
 
 .social li a {
-	color: #fff;
+	color: #000;
 	text-decoration: none;
 }
 
 .social li a:hover {
-  	color: #f9db45;
+  	color: #3498db;
 }
 
 .social li:last-of-type {

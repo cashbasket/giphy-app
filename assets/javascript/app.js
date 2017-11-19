@@ -1,17 +1,26 @@
-var apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
+// inital topics array
 var topics = ['the simpsons', 'homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz'];
+
+// initialize curTopic, which will store current topic
 var curTopic;
+
+// array to hold animated gif URLs for the current topic
 var toPreload = [];
 
+// global constants
+const numCols = 4;
+const colMargin = 10;
+const apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
+
 // global math stuff for making life easier
-var numCols = 4;
-var colMargin = 10;
+var itemPadding = parseInt($('.result-list > li').css('padding').split('p')[0]);
+var itemBorder = parseInt($('.result-list > li').css('border').split('p')[0]);
 var colWidth = (($('.container').width() - (colMargin * (numCols - 1))) / numCols);
 var columnLefts = [];
+var gifWidth = colWidth - (itemPadding * 2) - (itemBorder * 2);
 for(var i = 0; i < numCols; i++) {
 	columnLefts.push((colWidth + colMargin) * i);
 }
-var gifWidth = colWidth - 12; // padding/border can't be calculated programatically at this point, so I hard-coded a '12' (5+5+1+1)
 
 function createButtons(topicArray) {
 	for (var i = 0; i < topicArray.length; i++) {
@@ -30,7 +39,7 @@ function getGIFs(topic, limit) {
 				curTopic = topic;
 				var topicGIFs = [];
 				var results = response.data;
-				var lastInColHeight, lastInColTop, lastLeft;
+				var lastInColHeight, lastInColTop, left;
 				var resultList = $('<ul>').addClass('result-list');
 
 				$('#currentTopic').text(curTopic);
@@ -59,16 +68,20 @@ function getGIFs(topic, limit) {
 						.text('Rating: ' + result.rating.toUpperCase());
 					$('#results').append(resultList.append(imgItem.append(imgDiv.append(dummyImg).append(img)).append(rating)));
 
-					lastLeft = columnLefts[i % numCols];
+					// this determines the value of the "left" css property to be used (see global "columnLefts" array)
+					left = columnLefts[i % numCols];
 
 					if(i > numCols - 1) {
+						// find height of last item in same column as item to be updated
 						lastInColHeight = $('#item-' + (i - numCols)).outerHeight(true);
+						// find "top" css value of last item in same column as item to be updated
 						lastInColTop = $('#item-' + (i - numCols)).css('top').split('p')[0];
-						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + lastLeft + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + 'px'));
+						// append "style" HTML attribute to item to position it properly
+						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + 'px'));
 					} else {
 						lastInColHeight = $('#item-' + i).outerHeight(true);
 						lastInColTop = $('.instructions').outerHeight(true);
-						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + lastLeft + 'px; top: ' + parseInt(lastInColTop) + 'px');
+						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + parseInt(lastInColTop) + 'px');
 					}
 					
 					$('#img-' + i).on('load', function() {
@@ -77,6 +90,7 @@ function getGIFs(topic, limit) {
 						$('#dummy-' + curIndex).addClass('hidden');
 					});
 				}
+				//preload all the GIFs for the topic to speed things up a bit (it was taking a long time for the animated GIFs to load after the still images were clicked)
 				preloadTopicGIFs(topicGIFs);
 			})
 			.fail(function () {
@@ -88,8 +102,6 @@ function getGIFs(topic, limit) {
 	}
 }
 
-//preload all the GIFs for the topic to speed things up a bit
-//(it was taking a long time for the animated GIFs to load after the still images were clicked)
 function preloadTopicGIFs(array) {
 	for (var i = 0; i < array.length; i++){
 		toPreload[i] = new Image();

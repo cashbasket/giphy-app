@@ -107,7 +107,6 @@ function getGIFs(topic, limit) {
 					
 					$('#img-' + i).on('load', function() {
 						var curIndex = $(this).attr('id').split('-')[1];
-						$(this).removeClass('hidden');
 						$(this).fadeIn();
 						$('#dummy-' + curIndex).remove();
 					});

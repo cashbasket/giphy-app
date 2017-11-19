@@ -11,7 +11,7 @@ var columnLefts = [];
 for(var i = 0; i < numCols; i++) {
 	columnLefts.push((colWidth + colMargin) * i);
 }
-var gifWidth = colWidth - 12;  // padding on both sides + border on both sides = 12
+var gifWidth = colWidth - 12; // padding/border can't be calculated programatically at this point, so I hard-coded a '12' (5+5+1+1)
 
 function createButtons(topicArray) {
 	for (var i = 0; i < topicArray.length; i++) {

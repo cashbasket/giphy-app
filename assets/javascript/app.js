@@ -6,7 +6,7 @@ var toPreload = [];
 // global math stuff for making life easier
 var numCols = 4;
 var colMargin = 10;
-var colWidth = (($('.content-container').width() - (colMargin * 3)) / numCols);
+var colWidth = (($('.content-container').width() - (colMargin * (numCols - 1))) / numCols);
 var columnLefts = [];
 for(var i = 0; i < numCols; i++) {
 	columnLefts.push((colWidth + colMargin) * i);

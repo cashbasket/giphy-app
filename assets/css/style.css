@@ -33,7 +33,7 @@ body {
 
 .content-container {
 	margin: 0 auto;
-	width: 1160px;
+	width: 1040px;
 }
 
 .contents {
@@ -82,7 +82,6 @@ input {
 	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
 	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-	width: 230px;
 }
 
 .title-image {
@@ -138,7 +137,7 @@ input {
 
 .button-div {
 	float: left;
-	width: 773.31px;
+	width: 700px;
 }
 
 .add-well {
@@ -162,7 +161,6 @@ input {
 	margin: 0 0 10px 0;
 	padding: 5px;
 	text-align: center;
-	width: 282.5px;
 }
 
 .result-image {
@@ -203,7 +201,7 @@ input {
 
 .about-container {
 	margin: 0 auto;
-	width: 1160px;
+	width: 1040px;
 }
 
 .about-text{

@@ -42,7 +42,7 @@ function getGIFs(topic, limit) {
 						.addClass('list-item');
 					var imgDiv = $('<div>').attr('id', 'imgDiv-' + i);
 					//to make sure the final height of the <li> is calculated correctly, we must load the <li> with an empty placeholder image set to the exact height of the actual image (which might not load before the height is calculated)
-					var dummyImg = $('<img src="assets/images/blank.gif" width="270" />').attr('id', 'dummy-' + i)
+					var dummyImg = $('<img src="assets/images/blank.gif" width="100%" />').attr('id', 'dummy-' + i)
 						.attr('height', result.images.original_still.height * (gifWidth / result.images.original_still.width));
 					var img = $('<img />').attr('id', 'img-' + i)
 						.attr('src', result.images.original_still.url)
@@ -61,11 +61,11 @@ function getGIFs(topic, limit) {
 					if(i >= 4) {
 						lastInColHeight = $('#item-' + (i - 4)).outerHeight(true);
 						lastInColTop = $('#item-' + (i - 4)).css('top').split('p')[0];
-						$('#item-' + i).attr('style', 'position: absolute; left: ' + lastLeft + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + 'px'));
+						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + lastLeft + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + 'px'));
 					} else {
 						lastInColHeight = $('#item-' + i).outerHeight(true);
 						lastInColTop = $('.instructions').outerHeight(true);
-						$('#item-' + i).attr('style', 'position: absolute; left: ' + lastLeft + 'px; top: ' + parseInt(lastInColTop) + 'px');
+						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + lastLeft + 'px; top: ' + parseInt(lastInColTop) + 'px');
 					}
 					
 					$('#img-' + i).on('load', function() {

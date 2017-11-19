@@ -36,6 +36,9 @@ function createButtons(topicArray) {
 			.addClass('btn btn-option topic')
 			.prepend(topicArray[i])
 			.appendTo($('#buttons'));
+		if ($('#button-' + i).text() == curTopic) {
+			$('#button-' + i).addClass('btn-selected');
+		}
 	}
 }
 

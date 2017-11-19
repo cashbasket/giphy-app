@@ -59,12 +59,6 @@ h2 {
 	margin-bottom: 10px;
 }
 
-.instructions p {
-	color: #2980b9;
-	font-size: 1.2em;
-	font-weight: bold;
-}
-
 label {
 	font-weight: bold;
 	margin-bottom: 10px;
@@ -90,14 +84,6 @@ input {
 .title-image {
 	display: block;
 	margin: 30px auto 10px auto;
-}
-
-.instructions {
-	background-color: #fde990;
-	border: 1px solid #000;
-	margin: 10px 0 5px 0;
-	padding: 10px 5px;
-	text-align: center;
 }
 
 .form-message {
@@ -160,7 +146,13 @@ input {
 	border: 1px solid #4c914c;
 }
 
-.btn-option:hover,
+.btn-option:hover
+{
+	background: #666;
+	background-image: none;
+	color: #f9db45;
+}
+
 .btn-option:active, 
 .btn-option:focus, 
 .btn-selected {

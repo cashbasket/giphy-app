@@ -4,7 +4,7 @@ var topics = ['the simpsons', 'homer simpson', 'bart simpson', 'lisa simpson', '
 // initialize curTopic, which will store current topic
 var curTopic;
 
-// array to hold animated gif URLs for the current topic
+// array to hold in-memory image objects for the animated gifs for the currently selected topic (used for preloading images)
 var toPreload = [];
 
 // global constants

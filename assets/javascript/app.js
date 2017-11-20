@@ -5,7 +5,6 @@ var topics = ['the simpsons', 'homer simpson', 'bart simpson', 'lisa simpson', '
 
 // initialize curTopic, which will store current topic
 var curTopic;
-var limit = 10;
 
 // global constants
 const containerWidth = $('.container').width();
@@ -182,7 +181,7 @@ function doh() {
 }
 
 function init() {
-	getGIFs(topics[0], limit);
+	getGIFs(topics[0], 10);
 	createButtons(topics);
 }
 

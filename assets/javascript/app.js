@@ -71,10 +71,6 @@ function getGIFs(topic, limit, force = false) {
 						.addClass('list-item');
 					var imgDiv = $('<div class="img-div">').attr('id', 'imgDiv-' + i)
 						.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px');
-					//to make sure the final height of the <li> is calculated correctly, we must load the <li> with an empty placeholder image set to the height of the actual image (which might not load before the height is calculated)
-					var dummyImg = $('<img src="assets/images/blank.gif" width="100%" />').attr('id', 'dummy-' + i)
-						.attr('height',  adjustedHeight + 'px')
-						.addClass('dummy');
 					var img = $('<img />').attr('id', 'img-' + i)
 						.attr('src', result.images.original_still.url)
 						.attr('data-still', result.images.original_still.url)
@@ -85,7 +81,7 @@ function getGIFs(topic, limit, force = false) {
 					var rating = $('<span>').attr('id', 'rating-' + result.id)
 						.addClass('rating-span')
 						.text('Rating: ' + result.rating.toUpperCase());
-					$('#results').append(resultList.append(imgItem.append(imgDiv.append(dummyImg).append(img)).append(rating)));
+					$('#results').append(resultList.append(imgItem.append(imgDiv.append(img)).append(rating)));
 
 					// immediately hide gif so we can fade it in when loading is done
 					$('#img-' + i).hide();
@@ -107,9 +103,7 @@ function getGIFs(topic, limit, force = false) {
 					}
 
 					$('#img-' + i).on('load', function() {
-						var curIndex = $(this).attr('id').split('-')[1];
 						$(this).fadeIn();
-						$('#dummy-' + curIndex).remove();
 					});
 				}
 				//preload all the GIFs for the topic to speed things up a bit (I know, it seems pointless, but the images were taking too long to load on click)

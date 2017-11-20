@@ -1,12 +1,11 @@
+/*global preLoader:true*/
+
 // inital topics array
 var topics = ['the simpsons', 'homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz'];
 
 // initialize curTopic, which will store current topic
 var curTopic;
 var limit = 10;
-
-// array to hold in-memory image objects for the animated gifs for the currently selected topic (used for preloading images)
-var toPreload = [];
 
 // global constants
 const containerWidth = $('.container').width();
@@ -66,7 +65,7 @@ function getGIFs(topic, limit, force = false) {
 				for (var i = 0; i < results.length; i++) {
 					var result = results[i];
 					var adjustedHeight = result.images.original_still.height * (gifWidth / result.images.original_still.width);
-					topicGIFs.push(result.images.original.url);
+					topicGIFs.push(result.images.downsized_medium.url);
 					var imgItem = $('<li>').attr('id', 'item-' + i)
 						.attr('style', 'top: 0')
 						.addClass('list-item');
@@ -79,7 +78,7 @@ function getGIFs(topic, limit, force = false) {
 					var img = $('<img />').attr('id', 'img-' + i)
 						.attr('src', result.images.original_still.url)
 						.attr('data-still', result.images.original_still.url)
-						.attr('data-animated', result.images.original.url)
+						.attr('data-animated', result.images.downsized_medium.url)
 						.attr('data-state', 'still')
 						.attr('alt', result.title)
 						.addClass('result-image');
@@ -113,12 +112,11 @@ function getGIFs(topic, limit, force = false) {
 						$('#dummy-' + curIndex).remove();
 					});
 				}
-				//preload all the GIFs for the topic to speed things up a bit (it was taking a long time for the animated GIFs to load after the still images were clicked)
+				//preload all the GIFs for the topic to speed things up a bit (I know, it seems pointless, but the images were taking too long to load on click)
 				preloadTopicGIFs(topicGIFs);
 			})
 			.fail(function () {
-				$('#results').empty();
-				$('.instructions').removeClass('hidden')
+				$('#results').empty()
 					.html('<h2>ERROR: Unable to retrieve GIFs!</h2>');
 				doh();
 			});
@@ -130,11 +128,8 @@ function randomColor() {
 	return colors[Math.floor(Math.random() * colors.length)];
 }
 
-function preloadTopicGIFs(array) {
-	for (var i = 0; i < array.length; i++){
-		toPreload[i] = new Image();
-		toPreload[i].src = array[i];
-	}
+function preloadTopicGIFs(imagesArray) {
+	new preLoader(imagesArray);
 }
 
 function toggleAnimation(btnId) {
@@ -197,7 +192,7 @@ function init() {
 	createButtons(topics);
 }
 
-$(function () {
+$(document).ready(function () {
 	init();
 	$('body').on('click', '.topic', function () {
 		getGIFs($(this).attr('data-value'), $('#numGifs').val());

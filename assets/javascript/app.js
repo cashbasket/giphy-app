@@ -43,8 +43,8 @@ function createButtons(topicArray) {
 	}
 }
 
-function getGIFs(topic, limit) {
-	if (curTopic != topic) {
+function getGIFs(topic, limit, force = false) {
+	if (curTopic != topic || force) {
 		$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=' + limit)
 			.done(function (response) {
 				$('.topic').removeClass('btn-selected');
@@ -103,7 +103,7 @@ function getGIFs(topic, limit) {
 						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + 'px'));
 					} else {
 						lastInColHeight = $('#item-' + i).outerHeight(true);
-						lastInColTop = gutterWidth * 2;
+						lastInColTop = $('.options-div').outerHeight();
 						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + parseInt(lastInColTop) + 'px');
 					}
 
@@ -200,11 +200,15 @@ function init() {
 $(function () {
 	init();
 	$('body').on('click', '.topic', function () {
-		getGIFs($(this).attr('data-value'), limit);
+		getGIFs($(this).attr('data-value'), $('#numGifs').val());
 	});
 
 	$('body').on('click', '.result-image', function () {
 		toggleAnimation($(this).attr('id'));
+	});
+
+	$('body').on('change', '#numGifs', function() {
+		getGIFs(curTopic, $(this).val(), true);
 	});
 
 	$('#form').on('submit', function (e) {

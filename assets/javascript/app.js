@@ -63,16 +63,17 @@ function getGIFs(topic, limit, force = false) {
 				
 				for (var i = 0; i < results.length; i++) {
 					var result = results[i];
-					var adjustedHeight = result.images.original_still.height * (gifWidth / result.images.original_still.width);
+					var adjustedHeight = result.images.downsized_still.height * (gifWidth / result.images.downsized_still.width);
 					topicGIFs.push(result.images.downsized_medium.url);
 					var imgItem = $('<li>').attr('id', 'item-' + i)
 						.attr('style', 'top: 0')
 						.addClass('list-item');
 					var imgDiv = $('<div class="img-div">').attr('id', 'imgDiv-' + i)
 						.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px');
+					var imgLoading = $('<div class="loading">').attr('id', 'loading-' + i).attr('style', 'width: 100%; height: ' +  adjustedHeight + 'px').text('Loading');
 					var img = $('<img />').attr('id', 'img-' + i)
-						.attr('src', result.images.original_still.url)
-						.attr('data-still', result.images.original_still.url)
+						.attr('src', result.images.downsized_still.url)
+						.attr('data-still', result.images.downsized_still.url)
 						.attr('data-animated', result.images.downsized_medium.url)
 						.attr('data-state', 'still')
 						.attr('alt', result.title)
@@ -80,7 +81,7 @@ function getGIFs(topic, limit, force = false) {
 					var rating = $('<span>').attr('id', 'rating-' + result.id)
 						.addClass('rating-span')
 						.text('Rating: ' + result.rating.toUpperCase());
-					$('#results').append(resultList.append(imgItem.append(imgDiv.append(img)).append(rating)));
+					$('#results').append(resultList.append(imgItem.append(imgDiv.append(imgLoading).append(img)).append(rating)));
 
 					// immediately hide gif so we can fade it in when loading is done
 					$('#img-' + i).hide();
@@ -102,11 +103,11 @@ function getGIFs(topic, limit, force = false) {
 					}
 
 					$('#img-' + i).on('load', function() {
-						$(this).fadeIn();
+						$(this).fadeIn(250);
 					});
 				}
 				//preload all the GIFs for the topic to speed things up a bit (I know, it seems pointless, but the images were taking too long to load on click)
-				preloadTopicGIFs(topicGIFs);
+				preloadAnimated(topicGIFs);
 			})
 			.fail(function () {
 				$('#results').empty()
@@ -121,7 +122,7 @@ function randomColor() {
 	return colors[Math.floor(Math.random() * colors.length)];
 }
 
-function preloadTopicGIFs(imagesArray) {
+function preloadAnimated(imagesArray) {
 	new preLoader(imagesArray);
 }
 

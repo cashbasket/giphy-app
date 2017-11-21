@@ -195,12 +195,24 @@ input {
 
 .img-div {
 	overflow: hidden;
+	position: relative;
+}
+.loading {
+	position: absolute;
+	color:#fff;
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .result-image {
 	cursor: pointer;
 	height: auto;
+	left: 0;
+	position: absolute;
 	width: 100%;
+	z-index: 2;
 }
 
 .rating-span {

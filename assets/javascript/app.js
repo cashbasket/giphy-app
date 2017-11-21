@@ -1,5 +1,3 @@
-/*global preLoader:true*/
-
 // inital topics array
 var topics = ['the simpsons', 'homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz'];
 
@@ -106,8 +104,6 @@ function getGIFs(topic, limit, force = false) {
 						$(this).fadeIn(250);
 					});
 				}
-				//preload all the GIFs for the topic to speed things up a bit (I know, it seems pointless, but the images were taking too long to load on click)
-				preloadAnimated(topicGIFs);
 			})
 			.fail(function () {
 				$('#results').empty()
@@ -120,10 +116,6 @@ function getGIFs(topic, limit, force = false) {
 function randomColor() {
 	var colors = ['#f9db45', '#98d9f9', '#999999', '#d5effc', '#000000', '#ff0000', '#00ff00', '#0000ff', '#00ffff', '#ff00ff'];
 	return colors[Math.floor(Math.random() * colors.length)];
-}
-
-function preloadAnimated(imagesArray) {
-	new preLoader(imagesArray);
 }
 
 function toggleAnimation(btnId) {

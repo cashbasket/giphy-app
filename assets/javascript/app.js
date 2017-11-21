@@ -63,8 +63,8 @@ function getGIFs(topic, limit, force = false) {
 				
 				for (var i = 0; i < results.length; i++) {
 					var result = results[i];
-					var adjustedHeight = result.images.downsized_still.height * (gifWidth / result.images.downsized_still.width);
-					topicGIFs.push(result.images.downsized_medium.url);
+					var adjustedHeight = result.images.fixed_width.height * (gifWidth / result.images.fixed_width.width);
+					topicGIFs.push(result.images.fixed_width.url);
 					var imgItem = $('<li>').attr('id', 'item-' + i)
 						.attr('style', 'top: 0')
 						.addClass('list-item');
@@ -72,9 +72,9 @@ function getGIFs(topic, limit, force = false) {
 						.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px');
 					var imgLoading = $('<div class="loading">').attr('id', 'loading-' + i).attr('style', 'width: 100%; height: ' +  adjustedHeight + 'px').text('Loading');
 					var img = $('<img />').attr('id', 'img-' + i)
-						.attr('src', result.images.downsized_still.url)
-						.attr('data-still', result.images.downsized_still.url)
-						.attr('data-animated', result.images.downsized_medium.url)
+						.attr('src', result.images.fixed_width_still.url)
+						.attr('data-still', result.images.fixed_width_still.url)
+						.attr('data-animated', result.images.fixed_width.url)
 						.attr('data-state', 'still')
 						.attr('alt', result.title)
 						.addClass('result-image');
@@ -188,6 +188,7 @@ function init() {
 
 $(document).ready(function () {
 	init();
+
 	$('body').on('click', '.topic', function () {
 		getGIFs($(this).attr('data-value'), $('#numGifs').val());
 	});

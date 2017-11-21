@@ -32,6 +32,7 @@ body {
 	background: #98d9f9 url(../images/simpsons_clouds.jpg);
 	background-position: center top;
 	background-repeat: no-repeat;
+	background-size: initial;
 	font-family: 'Barlow Semi Condensed', sans-serif;
 	font-size: 16px;
 }
@@ -292,4 +293,10 @@ input {
 
 .social li:last-of-type {
 	margin-right: 0;
+}
+
+@media screen and (min-width: 1921px) {
+	body {
+		background-size: 100%;
+	}
 }

@@ -67,10 +67,10 @@ function getGIFs(topic, limit, force = false) {
 						.attr('style', 'top: 0')
 						.addClass('list-item');
 					var imgDiv = $('<div class="img-div">').attr('id', 'imgDiv-' + i)
-						.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px');
+						.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px;');
 					var img = $('<img />').attr('id', 'img-' + i)
-						.attr('src', result.images.fixed_width_still.url)
-						.attr('data-still', result.images.fixed_width_still.url)
+						.attr('src', 'assets/images/blank.gif')
+						.attr('data-original', result.images.fixed_width_still.url)
 						.attr('data-animated', result.images.fixed_width.url)
 						.attr('data-state', 'still')
 						.attr('alt', result.title)
@@ -78,10 +78,7 @@ function getGIFs(topic, limit, force = false) {
 					var rating = $('<span>').attr('id', 'rating-' + result.id)
 						.addClass('rating-span')
 						.text('Rating: ' + result.rating.toUpperCase());
-					$('#results').append(resultList.append(imgItem.append(imgDiv.append(img)).append(rating)));
-
-					// immediately hide gif so we can fade it in when loading is done
-					$('#img-' + i).hide();
+					$('#results').append(resultList.append(imgItem.append(imgDiv.append(img)).append(rating)));				
 
 					// this determines the value of the "left" css property to be used (see global "columnLefts" array)
 					left = columnLefts[i % numCols];
@@ -98,11 +95,10 @@ function getGIFs(topic, limit, force = false) {
 						lastInColTop = $('.options-div').outerHeight();
 						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + parseInt(lastInColTop) + 'px');
 					}
-
-					$('#img-' + i).on('load', function() {
-						$(this).fadeIn();
-					});
 				}
+				$('img.result-image').lazyload({
+					effect : 'fadeIn'
+				});
 			})
 			.fail(function () {
 				$('#results').empty()
@@ -120,7 +116,7 @@ function randomColor() {
 function toggleAnimation(btnId) {
 	var btn = $('#' + btnId);
 	if (btn.attr('data-state') === 'animated') {
-		btn.attr('src', btn.attr('data-still'))
+		btn.attr('src', btn.attr('data-original'))
 			.attr('data-state', 'still');
 	} else {
 		btn.attr('src', btn.attr('data-animated'))
@@ -178,7 +174,7 @@ function init() {
 }
 
 $(document).ready(function () {
-	init();
+	init();	
 
 	$('body').on('click', '.topic', function () {
 		getGIFs($(this).attr('data-value'), $('#numGifs').val());

@@ -189,10 +189,13 @@ input {
 	float: left;
 	padding: 5px;
 	text-align: center;
+	position: relative;
+	width: 267.5px;
 }
 
 .img-div {
 	overflow: hidden;
+	width: 100%;
 }
 
 .result-image {

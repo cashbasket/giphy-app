@@ -92,7 +92,7 @@ function getGIFs(topic, limit, force = false) {
 						// find "top" css value of last item in same column as item to be updated
 						lastInColTop = $('#item-' + (i - numCols)).css('top').split('p')[0];
 						// append "style" HTML attribute to item to position it properly
-						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + 'px'));
+						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + gutterWidth + 'px'));
 					} else {
 						lastInColHeight = $('#item-' + i).outerHeight(true);
 						lastInColTop = $('.options-div').outerHeight();

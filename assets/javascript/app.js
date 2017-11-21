@@ -68,7 +68,6 @@ function getGIFs(topic, limit, force = false) {
 						.addClass('list-item');
 					var imgDiv = $('<div class="img-div">').attr('id', 'imgDiv-' + i)
 						.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px');
-					var imgLoading = $('<div class="loading">').attr('id', 'loading-' + i).attr('style', 'width: 100%; height: ' +  adjustedHeight + 'px').text('Loading');
 					var img = $('<img />').attr('id', 'img-' + i)
 						.attr('src', result.images.fixed_width_still.url)
 						.attr('data-still', result.images.fixed_width_still.url)
@@ -79,7 +78,7 @@ function getGIFs(topic, limit, force = false) {
 					var rating = $('<span>').attr('id', 'rating-' + result.id)
 						.addClass('rating-span')
 						.text('Rating: ' + result.rating.toUpperCase());
-					$('#results').append(resultList.append(imgItem.append(imgDiv.append(imgLoading).append(img)).append(rating)));
+					$('#results').append(resultList.append(imgItem.append(imgDiv.append(img)).append(rating)));
 
 					// immediately hide gif so we can fade it in when loading is done
 					$('#img-' + i).hide();

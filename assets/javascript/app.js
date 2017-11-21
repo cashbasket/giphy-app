@@ -100,7 +100,7 @@ function getGIFs(topic, limit, force = false) {
 					}
 
 					$('#img-' + i).on('load', function() {
-						$(this).fadeIn(250);
+						$(this).fadeIn();
 					});
 				}
 			})

@@ -112,6 +112,12 @@ function buildItems(response, offset = 0) {
 	});
 }
 
+function error() {
+	$('#results').empty();
+	$('<h2 class="red">').text('ERROR: Unable to retrieve GIFs!').attr('style', 'position: absolute; top: 50px').appendTo($('#results'));
+	doh();
+}
+
 function getInfiniteGIFs(topic, force = false) {
 	if (curTopic != topic || force) {
 		if (topic != curTopic) {
@@ -138,9 +144,7 @@ function getInfiniteGIFs(topic, force = false) {
 					offset += perCall;
 				})
 				.fail(function () {
-					$('#results').empty()
-						.html('<h2>ERROR: Unable to retrieve GIFs!</h2>');
-					doh();
+					error();
 				});
 		}
 	}
@@ -163,9 +167,7 @@ function getGIFs(topic, limit, force = false) {
 				buildItems(response);
 			})
 			.fail(function () {
-				$('#results').empty()
-					.html('<h2>ERROR: Unable to retrieve GIFs!</h2>');
-				doh();
+				error();
 			});
 	}
 }

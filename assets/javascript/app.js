@@ -54,6 +54,13 @@ function buildItems(response, offset = 0) {
 	var topicGIFs = [];
 	var results = response.data;
 
+	if (results.length === 0) {
+		$('<h2>').text('There are no GIFs for this topic. Sorry!').attr('style', 'position: absolute; top: 50px').appendTo($('#results'));
+		return;
+	} else {
+		$('#results h2').remove();
+	}
+
 	if(offset === 0) {
 		$('.result-list').empty();
 	}

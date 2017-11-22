@@ -69,7 +69,7 @@ function getGIFs(topic, limit, force = false) {
 					var imgDiv = $('<div class="img-div">').attr('id', 'imgDiv-' + i)
 						.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px;');
 					var img = $('<img />').attr('id', 'img-' + i)
-						.attr('src', 'assets/images/blank.gif')
+						.attr('src', 'data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=')
 						.attr('data-original', result.images.fixed_width_still.url)
 						.attr('data-animated', result.images.fixed_width.url)
 						.attr('data-state', 'still')

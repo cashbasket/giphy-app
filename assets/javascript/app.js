@@ -1,8 +1,8 @@
 // inital topics array
 var topics = ['the simpsons', 'homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz'];
 
-// initialize curTopic, which will store current topic
-var curTopic;
+var curTopic, lastInColHeight, lastInColTop, left, endOfPage;
+var offset = 0;
 
 // global constants
 const containerWidth = $('.container').width();
@@ -12,6 +12,9 @@ const itemBorder = $('.result-list > li').css('border-left-width').split('p')[0]
 const numCols = 4;
 const gutterWidth = 10;
 const apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
+const perCall = 50; //number of GIFs to pull per API call (for infinite scrolling)
+
+var totalGIFsForTopic = perCall;
 
 // global math stuff for making life easier (if I want to change container width, all I have to do us update its width in the css and everything else inside the container will adjust accordingly)
 const colWidth = (containerWidth - (gutterWidth * (numCols - 1))) / numCols;
@@ -39,66 +42,118 @@ function createButtons(topicArray) {
 	}
 }
 
+function addSelectedButtonStyle() {
+	for (var t = 0; t < topics.length; t++) {
+		if ($('#button-' + t).text() == curTopic) {
+			$('#button-' + t).addClass('btn-selected');
+			break;
+		}
+	}
+}
+function buildItems(response, offset = 0) {
+	var topicGIFs = [];
+	var results = response.data;
+
+	if(offset === 0) {
+		$('.result-list').empty();
+	}
+
+	for (var i = offset; i < results.length + offset; i++) {
+		var result = results[i - offset];
+		var adjustedHeight = result.images.fixed_width.height * (gifWidth / result.images.fixed_width.width);
+		topicGIFs.push(result.images.fixed_width.url);
+		var imgItem = $('<li>').attr('id', 'item-' + i)
+			.attr('style', 'top: 0')
+			.addClass('list-item');
+		var imgDiv = $('<div class="img-div">').attr('id', 'imgDiv-' + i)
+			.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px;');
+		var img = $('<img />').attr('id', 'img-' + i)
+			.attr('src', 'data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=')
+			.attr('data-original', result.images.fixed_width_still.url)
+			.attr('data-animated', result.images.fixed_width.url)
+			.attr('data-state', 'still')
+			.attr('alt', result.title)
+			.addClass('result-image');
+		var rating = $('<span>').attr('id', 'rating-' + result.id)
+			.addClass('rating-span')
+			.text('Rating: ' + result.rating.toUpperCase());
+		$('.result-list').append(imgItem.append(imgDiv.append(img)).append(rating));				
+
+		// this determines the value of the "left" css property to be used (see global "columnLefts" array)
+		left = columnLefts[i % numCols];
+
+		if(i > numCols - 1) {
+			// find height of last item in same column as item to be updated
+			lastInColHeight = $('#item-' + (i - numCols)).outerHeight(true);
+			// find "top" css value of last item in same column as item to be updated
+			lastInColTop = $('#item-' + (i - numCols)).css('top').split('p')[0];
+			// append "style" HTML attribute to item to position it properly
+			$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + gutterWidth + 'px'));
+		} else {
+			lastInColHeight = $('#item-' + i).outerHeight(true);
+			lastInColTop = $('.options-div').outerHeight();
+			$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + parseInt(lastInColTop) + 'px');
+		}
+
+		if (i === results.length + offset - 1) {
+			endOfPage = parseFloat($('#item-' + i).outerHeight(true)) + parseFloat($('#item-' + i).css('top').split('p')[0]);
+		}
+	}
+
+	$('img.result-image').lazyload({
+		effect : 'fadeIn'
+	});
+}
+
+function getInfiniteGIFs(topic, force = false) {
+	if (curTopic != topic || force) {
+		if (topic != curTopic) {
+			offset = 0;
+		}
+		if (offset < totalGIFsForTopic) {
+			$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&offset=' + offset + '&limit=' + perCall)
+				.done(function (response) {
+					totalGIFsForTopic = response.pagination.total_count;
+					if(topic != curTopic) {
+						$('.result-list').empty();
+					}
+					$('.topic').removeClass('btn-selected');
+					curTopic = topic;
+					addSelectedButtonStyle();
+					buildItems(response, offset);
+					
+					window.onscroll = function() {
+						if ((window.innerHeight + window.pageYOffset) >= endOfPage) {
+							window.onscroll = null;
+							getInfiniteGIFs(curTopic, true);
+						}
+					};
+					offset += perCall;
+				})
+				.fail(function () {
+					$('#results').empty()
+						.html('<h2>ERROR: Unable to retrieve GIFs!</h2>');
+					doh();
+				});
+		}
+	}
+}
+
 function getGIFs(topic, limit, force = false) {
 	if (curTopic != topic || force) {
+		// we have to reset the offset for infinite scrolling AND nullify the onscroll event every time the user chooses to go back to a finite number of GIFs
+		offset = 0;
+		window.onscroll = null;
+
 		$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=' + limit)
 			.done(function (response) {
+				if(topic != curTopic) {
+					$('.result-list').empty();
+				}
 				$('.topic').removeClass('btn-selected');
 				curTopic = topic;
-				for (var t = 0; t < topics.length; t++) {
-					if ($('#button-' + t).text() == curTopic) {
-						$('#button-' + t).addClass('btn-selected');
-						break;
-					}
-				}
-				var topicGIFs = [];
-				var results = response.data;
-				var lastInColHeight, lastInColTop, left;
-				var resultList = $('<ul>').addClass('result-list');
-
-				$('#currentTopic').text(curTopic);
-				$('#results').empty();
-				
-				for (var i = 0; i < results.length; i++) {
-					var result = results[i];
-					var adjustedHeight = result.images.fixed_width.height * (gifWidth / result.images.fixed_width.width);
-					topicGIFs.push(result.images.fixed_width.url);
-					var imgItem = $('<li>').attr('id', 'item-' + i)
-						.attr('style', 'top: 0')
-						.addClass('list-item');
-					var imgDiv = $('<div class="img-div">').attr('id', 'imgDiv-' + i)
-						.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px;');
-					var img = $('<img />').attr('id', 'img-' + i)
-						.attr('src', 'data:image/gif;base64,R0lGODdhAQABAPAAAMPDwwAAACwAAAAAAQABAAACAkQBADs=')
-						.attr('data-original', result.images.fixed_width_still.url)
-						.attr('data-animated', result.images.fixed_width.url)
-						.attr('data-state', 'still')
-						.attr('alt', result.title)
-						.addClass('result-image');
-					var rating = $('<span>').attr('id', 'rating-' + result.id)
-						.addClass('rating-span')
-						.text('Rating: ' + result.rating.toUpperCase());
-					$('#results').append(resultList.append(imgItem.append(imgDiv.append(img)).append(rating)));				
-
-					// this determines the value of the "left" css property to be used (see global "columnLefts" array)
-					left = columnLefts[i % numCols];
-
-					if(i > numCols - 1) {
-						// find height of last item in same column as item to be updated
-						lastInColHeight = $('#item-' + (i - numCols)).outerHeight(true);
-						// find "top" css value of last item in same column as item to be updated
-						lastInColTop = $('#item-' + (i - numCols)).css('top').split('p')[0];
-						// append "style" HTML attribute to item to position it properly
-						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + gutterWidth + 'px'));
-					} else {
-						lastInColHeight = $('#item-' + i).outerHeight(true);
-						lastInColTop = $('.options-div').outerHeight();
-						$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + parseInt(lastInColTop) + 'px');
-					}
-				}
-				$('img.result-image').lazyload({
-					effect : 'fadeIn'
-				});
+				addSelectedButtonStyle();
+				buildItems(response);
 			})
 			.fail(function () {
 				$('#results').empty()
@@ -177,7 +232,11 @@ $(document).ready(function () {
 	init();	
 
 	$('body').on('click', '.topic', function () {
-		getGIFs($(this).attr('data-value'), $('#numGifs').val());
+		if($('#numGifs').val() == 'infinite') {
+			getInfiniteGIFs($(this).attr('data-value'), true);
+		} else {
+			getGIFs($(this).attr('data-value'), $('#numGifs').val());
+		}
 	});
 
 	$('body').on('click', '.result-image', function () {
@@ -185,7 +244,11 @@ $(document).ready(function () {
 	});
 
 	$('body').on('change', '#numGifs', function() {
-		getGIFs(curTopic, $(this).val(), true);
+		if($(this).val() == 'infinite') {
+			getInfiniteGIFs(curTopic, true);
+		} else {
+			getGIFs(curTopic, $(this).val(), true);
+		}
 	});
 
 	$('#form').on('submit', function (e) {

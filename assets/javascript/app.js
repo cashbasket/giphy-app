@@ -47,7 +47,8 @@ function createButtons(topicArray) {
 function addSelectedButtonStyle() {
 	for (var i = 0; i < topics.length; i++) {
 		if ($('#button-' + i).text() == curTopic) {
-			$('#button-' + i).addClass('btn-selected');
+			$('#button-' + i).removeClass('pulsate')
+				.addClass('btn-selected');
 			break;
 		}
 	}

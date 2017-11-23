@@ -83,8 +83,7 @@ function buildItems(response, offset = 0) {
 			.attr('data-still', result.images.fixed_width_still.url)
 			.attr('data-animated', result.images.fixed_width.url)
 			.attr('data-state', 'still')
-			.attr('data-appear-top-offset', '400')
-			.attr('data-appear-bottom-offset', '400')
+			.attr('data-appear-vertical-offset', '500')
 			.attr('alt', result.title)
 			.addClass('result-image');
 		var rating = $('<span>').attr('id', 'rating-' + result.id)

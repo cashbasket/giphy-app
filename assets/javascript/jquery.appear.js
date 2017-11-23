@@ -60,10 +60,8 @@
 		var left = offset.left;
 		var top = offset.top;
 
-		var window_bottom = window_top + $window.height(); //added 11/23/2017 - RJM
-
-		if (top + $element.height() + $element.data('appear-bottom-offset') >= window_top && 
-        top - ($element.data('appear-top-offset') || 0) <= window_bottom &&
+		if (top + $element.height() + ($element.data('appear-vertical-offset') || 0) >= window_top && //modified 11/23/2017 - RJM
+        top - ($element.data('appear-vertical-offset') || 0) <= window_top + $window.height() &&
         left + $element.width() >= window_left &&
         left - ($element.data('appear-left-offset') || 0) <= window_left + $window.width()) {
 			return true;

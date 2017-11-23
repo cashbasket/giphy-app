@@ -80,9 +80,11 @@ function buildItems(response, offset = 0) {
 			.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px;');
 		var img = $('<img />').attr('id', 'img-' + i)
 			.attr('src', 'assets/images/blank.gif')
-			.attr('data-original', result.images.fixed_width_still.url)
+			.attr('data-src', result.images.fixed_width_still.url)
+			.attr('data-still', result.images.fixed_width_still.url)
 			.attr('data-animated', result.images.fixed_width.url)
 			.attr('data-state', 'still')
+			.attr('height', adjustedHeight)
 			.attr('alt', result.title)
 			.addClass('result-image');
 		var rating = $('<span>').attr('id', 'rating-' + result.id)
@@ -111,8 +113,12 @@ function buildItems(response, offset = 0) {
 		}
 	}
 
-	$('.result-image').lazyload({
-		effect : 'fadeIn'
+	$('.result-image').Lazy({
+		scrollDirection: 'vertical',
+		effect: 'fadeIn',
+		effectTime: 400,
+		visibleOnly: true,
+		defaultImage: 'assets/images/blank.gif'
 	});
 }
 
@@ -184,7 +190,7 @@ function randomColor() {
 function toggleAnimation(imgId) {
 	var img = $('#' + imgId);
 	if (img.attr('data-state') === 'animated') {
-		img.attr('src', img.attr('data-original'))
+		img.attr('src', img.attr('data-still'))
 			.attr('data-state', 'still');
 	} else {
 		img.attr('src', img.attr('data-animated'))

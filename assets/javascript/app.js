@@ -8,17 +8,18 @@ var offset = 0;
 const containerWidth = $('.container').width();
 const asideWidth = $('.add-well').outerWidth();
 const itemPadding = parseInt($('.result-list > li').css('padding-left'));
-const itemBorder = $('.result-list > li').css('border-left-width').split('p')[0];
+const itemBorderWidth = $('.result-list > li').css('border-left-width').split('p')[0];
 const numCols = 4;
 const gutterWidth = 10;
 const apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
 const perCall = 50; //number of GIFs to pull per API call (for infinite scrolling)
 
+// keep track of the total number of gifs for each topic for infinite scroll (initialize to value of perCall)
 var totalGIFsForTopic = perCall;
 
 // global math stuff for making life easier (if I want to change container width, all I have to do us update its width in the css and everything else inside the container will adjust accordingly)
 const colWidth = (containerWidth - (gutterWidth * (numCols - 1))) / numCols;
-const gifWidth = colWidth - (itemPadding * 2) - (itemBorder * 2);
+const gifWidth = colWidth - (itemPadding * 2) - (itemBorderWidth * 2);
 var columnLefts = [];
 
 //populate columnLefts array, which will be used to determine the "left" css property for items in each column
@@ -26,7 +27,7 @@ for(var i = 0; i < numCols; i++) {
 	columnLefts.push((colWidth + gutterWidth) * i);
 }
 
-//since add topic form width is the same regardless of container size, we must set the width of the buttons div accordingly
+//since add topic form width is the same regardless of container size, we must set the width of the buttons div with math!
 $('.button-div').css('width', parseInt(containerWidth - asideWidth - gutterWidth) + 'px');
 
 function createButtons(topicArray) {
@@ -42,14 +43,17 @@ function createButtons(topicArray) {
 	}
 }
 
+//basically just adds "btn-selected" class to the appropriate button
 function addSelectedButtonStyle() {
-	for (var t = 0; t < topics.length; t++) {
-		if ($('#button-' + t).text() == curTopic) {
-			$('#button-' + t).addClass('btn-selected');
+	for (var i = 0; i < topics.length; i++) {
+		if ($('#button-' + i).text() == curTopic) {
+			$('#button-' + i).addClass('btn-selected');
 			break;
 		}
 	}
 }
+
+//handles creation and lazy-loading of GIFs and their containers
 function buildItems(response, offset = 0) {
 	var topicGIFs = [];
 	var results = response.data;
@@ -107,7 +111,7 @@ function buildItems(response, offset = 0) {
 		}
 	}
 
-	$('img.result-image').lazyload({
+	$('.result-image').lazyload({
 		effect : 'fadeIn'
 	});
 }
@@ -152,7 +156,7 @@ function getInfiniteGIFs(topic, force = false) {
 
 function getGIFs(topic, limit, force = false) {
 	if (curTopic != topic || force) {
-		// we have to reset the offset for infinite scrolling AND nullify the onscroll event every time the user chooses to go back to a finite number of GIFs
+		// we have to reset the offset for infinite scrolling AND nullify the onscroll event every time the user chooses to go from infinite GIFs back to finite GIFs
 		offset = 0;
 		window.onscroll = null;
 
@@ -177,13 +181,13 @@ function randomColor() {
 	return colors[Math.floor(Math.random() * colors.length)];
 }
 
-function toggleAnimation(btnId) {
-	var btn = $('#' + btnId);
-	if (btn.attr('data-state') === 'animated') {
-		btn.attr('src', btn.attr('data-original'))
+function toggleAnimation(imgId) {
+	var img = $('#' + imgId);
+	if (img.attr('data-state') === 'animated') {
+		img.attr('src', img.attr('data-original'))
 			.attr('data-state', 'still');
 	} else {
-		btn.attr('src', btn.attr('data-animated'))
+		img.attr('src', img.attr('data-animated'))
 			.attr('data-state', 'animated');
 	}
 }
@@ -213,7 +217,6 @@ function addTopic(value) {
 			.text('Topic added successfully!');
 		createButtons(topics);
 		$('#button-' + (topics.length - 1)).addClass('pulsate');
-
 	} else if (formattedValue.length === 0) {
 		$('#formMessage').removeClass('hidden green')
 			.text('Please enter a topic.')
@@ -260,8 +263,8 @@ $(document).ready(function () {
 		}
 	});
 
-	$('#form').on('submit', function (e) {
-		e.preventDefault();
+	$('#form').on('submit', function (event) {
+		event.preventDefault();
 		addTopic($('#input').val());
 	});
 });

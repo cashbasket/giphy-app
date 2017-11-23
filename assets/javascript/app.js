@@ -56,7 +56,6 @@ function addSelectedButtonStyle() {
 
 //handles creation and lazy-loading of GIFs and their containers
 function buildItems(response, offset = 0) {
-	var topicGIFs = [];
 	var results = response.data;
 
 	if (results.length === 0) {
@@ -73,7 +72,6 @@ function buildItems(response, offset = 0) {
 	for (var i = offset; i < results.length + offset; i++) {
 		var result = results[i - offset];
 		var adjustedHeight = result.images.fixed_width.height * (gifWidth / result.images.fixed_width.width);
-		topicGIFs.push(result.images.fixed_width.url);
 		var imgItem = $('<li>').attr('id', 'item-' + i)
 			.attr('style', 'top: 0')
 			.addClass('list-item');
@@ -133,6 +131,8 @@ function getInfiniteGIFs(topic, force = false) {
 	if (curTopic != topic || force) {
 		if (topic != curTopic) {
 			offset = 0;
+			//in case last topic returned zero GIFs, we must reset totalGIFsForTopic
+			totalGIFsForTopic = perCall;
 		}
 		if (offset < totalGIFsForTopic) {
 			$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&offset=' + offset + '&limit=' + perCall)

@@ -83,7 +83,8 @@ function buildItems(response, offset = 0) {
 			.attr('data-still', result.images.fixed_width_still.url)
 			.attr('data-animated', result.images.fixed_width.url)
 			.attr('data-state', 'still')
-			.attr('height', adjustedHeight)
+			.attr('data-appear-top-offset', '300')
+			.attr('data-appear-bottom-offset', '300')
 			.attr('alt', result.title)
 			.addClass('result-image');
 		var rating = $('<span>').attr('id', 'rating-' + result.id)
@@ -117,7 +118,10 @@ function buildItems(response, offset = 0) {
 		effect: 'fadeIn',
 		effectTime: 400,
 		visibleOnly: true,
-		defaultImage: 'assets/images/blank.gif'
+		defaultImage: 'assets/images/blank.gif',
+		afterLoad: function(element) {
+			$(element).appear();
+		}
 	});
 }
 
@@ -152,6 +156,7 @@ function getInfiniteGIFs(topic, force = false) {
 							getInfiniteGIFs(curTopic, true);
 						}
 					};
+
 					offset += perCall;
 				})
 				.fail(function () {
@@ -249,6 +254,19 @@ function init() {
 
 $(document).ready(function () {
 	init();	
+
+	$('body').on('appear', '.result-image', function(event, $affected) {
+		$affected.each(function() {
+			$(this).animate({ opacity: 1 }, 400);
+		});
+		
+	});
+
+	$('body').on('disappear', '.result-image', function(event, $affected) {
+		$affected.each(function() {
+			$(this).animate({ opacity: 0 }, 0);
+		});
+	});
 
 	$('body').on('click', '.topic', function () {
 		if($('#numGifs').val() == 'infinite') {

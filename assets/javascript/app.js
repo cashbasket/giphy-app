@@ -44,7 +44,6 @@ function createButtons(topicArray) {
 	}
 }
 
-//basically just adds "btn-selected" class to the appropriate button
 function addSelectedButtonStyle() {
 	for (var i = 0; i < topics.length; i++) {
 		if ($('#button-' + i).text() == curTopic) {
@@ -148,6 +147,7 @@ function getInfiniteGIFs(topic, force = false) {
 					$('.topic').removeClass('btn-selected');
 					curTopic = topic;
 					addSelectedButtonStyle();
+					populateDropdown(topics);
 					buildItems(response, offset);
 					
 					window.onscroll = function() {
@@ -180,6 +180,7 @@ function getGIFs(topic, limit, force = false) {
 				$('.topic').removeClass('btn-selected');
 				curTopic = topic;
 				addSelectedButtonStyle();
+				populateDropdown(topics);
 				buildItems(response);
 			})
 			.fail(function () {
@@ -251,7 +252,11 @@ function doh() {
 function populateDropdown(array) {
 	$('#ddlSticky').empty();
 	for (var i = 0; i < array.length; i++) {
-		$('<option>').text(array[i]).appendTo($('#ddlSticky'));
+		var option = $('<option>').text(array[i]);
+		if (curTopic == array[i]) {
+			option.attr('selected', 'selected');
+		}
+		$('#ddlSticky').append(option);
 	}
 }
 

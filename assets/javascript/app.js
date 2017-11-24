@@ -1,7 +1,8 @@
 // inital topics array
 var topics = ['the simpsons', 'homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz'];
 
-var curTopic, lastInColHeight, lastInColTop, left, endOfPage;
+var curTopic, lastInColHeight, lastInColTop, left;
+var endOfPage = 0;
 var offset = 0;
 
 // global constants
@@ -58,7 +59,7 @@ function addSelectedButtonStyle() {
 function buildItems(response, offset = 0) {
 	var results = response.data;
 
-	if (results.length === 0) {
+	if (offset === 0 && results.length === 0) {
 		$('<h2>').text('There are no GIFs for this topic. Sorry!').attr('style', 'position: absolute; top: 50px').appendTo($('#results'));
 		return;
 	} else {
@@ -227,6 +228,7 @@ function addTopic(value) {
 			.addClass('green')
 			.text('Topic added successfully!');
 		createButtons(topics);
+		populateDropdown(topics);
 		$('#button-' + (topics.length - 1)).addClass('pulsate');
 	} else if (formattedValue.length === 0) {
 		$('#formMessage').removeClass('hidden green')
@@ -246,13 +248,29 @@ function doh() {
 	audio.play();
 }
 
+function populateDropdown(array) {
+	$('#ddlSticky').empty();
+	for (var i = 0; i < array.length; i++) {
+		$('<option>').text(array[i]).appendTo($('#ddlSticky'));
+	}
+}
+
 function init() {
 	getGIFs(topics[0], 10);
 	createButtons(topics);
+	populateDropdown(topics);
 }
 
 $(document).ready(function () {
 	init();	
+	
+	$(window).on('scroll', function() {
+		if ($('#numGifs').val() == 'infinite' && $(this).scrollTop() > 400) {
+			$('#stickyNav').removeClass('hidden').addClass('fixed');
+		} else {
+			$('#stickyNav').addClass('hidden').removeClass('fixed');
+		}
+	});
 
 	$('body').on('appear', '.result-image', function(event, $affected) {
 		$affected.each(function() {
@@ -273,6 +291,10 @@ $(document).ready(function () {
 		} else {
 			getGIFs($(this).attr('data-value'), $('#numGifs').val());
 		}
+	});
+
+	$('body').on('change', '#ddlSticky', function () {
+		getInfiniteGIFs($(this).val(), true);
 	});
 
 	$('body').on('click', '.result-image', function () {

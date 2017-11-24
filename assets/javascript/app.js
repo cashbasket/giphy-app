@@ -265,7 +265,8 @@ $(document).ready(function () {
 	init();	
 	
 	$(window).on('scroll', function() {
-		if ($('#numGifs').val() == 'infinite' && $(this).scrollTop() > 400) {
+		var pos = $('#results').offset();
+		if ($('#numGifs').val() == 'infinite' && $(this).scrollTop() > pos.top) {
 			$('#stickyNav').removeClass('hidden').addClass('fixed');
 		} else {
 			$('#stickyNav').addClass('hidden').removeClass('fixed');

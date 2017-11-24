@@ -83,8 +83,10 @@ function buildItems(response, offset = 0) {
 		var imgItem = $('<li>').attr('id', 'item-' + i)
 			.attr('style', 'top: 0')
 			.addClass('list-item');
+		var bgColor = randomColor();
 		var imgDiv = $('<div class="img-div">').attr('id', 'imgDiv-' + i)
-			.attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px;');
+			.attr('data-bg', bgColor)
+			.attr('style', 'background-color: ' + bgColor + '; width: 100%; height: ' +  adjustedHeight + 'px;');
 		var img = $('<img />').attr('id', 'img-' + i)
 			.attr('src', 'assets/images/blank.gif')
 			.attr('data-src', result.images.fixed_width_still.url)
@@ -285,7 +287,8 @@ function repositionItem(index) {
 		lastInColTop = $('.options-div').outerHeight();
 		$('#item-' + index).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + parseInt(lastInColTop) + 'px');
 	}
-	$('#imgDiv-' + index).attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px;');
+	var bgColor = $('#imgDiv-' + index).data('bg');
+	$('#imgDiv-' + index).attr('style', 'background-color: ' + bgColor + '; width: 100%; height: ' +  adjustedHeight + 'px;');
 }
 
 function sizeButtonDiv() {

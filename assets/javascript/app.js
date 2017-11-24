@@ -1,35 +1,22 @@
 // inital topics array
 var topics = ['the simpsons', 'homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz'];
 
-var curTopic, lastInColHeight, lastInColTop, left;
+var curTopic, lastInColHeight, lastInColTop, left, gifWidth, colWidth, numCols;
+var containerWidth = $('.container').css('width').split('p')[0];
 var endOfPage = 0;
 var offset = 0;
+var columnLefts = [];
 
 // global constants
-const containerWidth = $('.container').width();
 const asideWidth = $('.add-well').outerWidth();
 const itemPadding = parseInt($('.result-list > li').css('padding-left'));
 const itemBorderWidth = $('.result-list > li').css('border-left-width').split('p')[0];
-const numCols = 4;
 const gutterWidth = 10;
 const apiKey = '9D0xuOupi5AKDiYYkzFcM1gWkWMDLqCb';
 const perCall = 50; //number of GIFs to pull per API call (for infinite scrolling)
 
 // keep track of the total number of gifs for each topic for infinite scroll (initialize to value of perCall)
 var totalGIFsForTopic = perCall;
-
-// global math stuff for making life easier (if I want to change container width, all I have to do us update its width in the css and everything else inside the container will adjust accordingly)
-const colWidth = (containerWidth - (gutterWidth * (numCols - 1))) / numCols;
-const gifWidth = colWidth - (itemPadding * 2) - (itemBorderWidth * 2);
-var columnLefts = [];
-
-//populate columnLefts array, which will be used to determine the "left" css property for items in each column
-for(var i = 0; i < numCols; i++) {
-	columnLefts.push((colWidth + gutterWidth) * i);
-}
-
-//since add topic form width is the same regardless of container size, we must set the width of the buttons div with math!
-$('.button-div').css('width', parseInt(containerWidth - asideWidth - gutterWidth) + 'px');
 
 function createButtons(topicArray) {
 	for (var i = 0; i < topicArray.length; i++) {
@@ -67,7 +54,7 @@ function buildItems(response, offset = 0) {
 
 	if(offset === 0) {
 		$('.result-list').empty();
-	}
+	} 
 
 	for (var i = offset; i < results.length + offset; i++) {
 		var result = results[i - offset];
@@ -80,6 +67,8 @@ function buildItems(response, offset = 0) {
 		var img = $('<img />').attr('id', 'img-' + i)
 			.attr('src', 'assets/images/blank.gif')
 			.attr('data-src', result.images.fixed_width_still.url)
+			.attr('data-width', result.images.fixed_width.width)
+			.attr('data-height', result.images.fixed_width.height)
 			.attr('data-still', result.images.fixed_width_still.url)
 			.attr('data-animated', result.images.fixed_width.url)
 			.attr('data-state', 'still')
@@ -260,7 +249,55 @@ function populateDropdown(array) {
 	}
 }
 
+function setColumns() {	
+	containerWidth = $('.container').width();
+
+	if (containerWidth >= 1100)
+		numCols = 4;
+	else if (containerWidth < 1100 && containerWidth >= 832.5)
+		numCols = 3;
+	else if (containerWidth < 832.5 && containerWidth >= 555)
+		numCols = 2;
+	else
+		numCols = 1;
+
+	colWidth = (containerWidth - (gutterWidth * (numCols - 1))) / numCols;
+	gifWidth = colWidth - (itemPadding * 2) - (itemBorderWidth * 2);
+	
+	columnLefts = [];
+	for(var i = 0; i < numCols; i++) {
+		columnLefts.push((colWidth + gutterWidth) * i);
+	}
+}
+
+function repositionItem(i, width) {
+	left = columnLefts[i % numCols];
+	var adjustedHeight = $('#img-' + i).data('height') * (width / $('#img-' + i).data('width'));
+	if(i > numCols - 1) {
+		// find height of last item in same column as item to be updated
+		lastInColHeight = $('#item-' + (i - numCols)).outerHeight(true);
+		// find "top" css value of last item in same column as item to be updated
+		lastInColTop = $('#item-' + (i - numCols)).css('top').split('p')[0];
+		// append "style" HTML attribute to item to position it properly
+		$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + gutterWidth + 'px'));
+	} else {
+		lastInColHeight = $('#item-' + i).outerHeight(true);
+		lastInColTop = $('.options-div').outerHeight();
+		$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + parseInt(lastInColTop) + 'px');
+	}
+	$('#imgDiv-' + i).attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px;');
+}
+
+function sizeButtonDiv() {
+	if (containerWidth > 555)
+		$('.button-div').css('width', parseInt(containerWidth - asideWidth - gutterWidth) + 'px');
+	else
+		$('.button-div').css('width', '100%');
+}
+
 function init() {
+	setColumns();
+	sizeButtonDiv();
 	getGIFs(topics[0], 10);
 	createButtons(topics);
 	populateDropdown(topics);
@@ -268,6 +305,18 @@ function init() {
 
 $(document).ready(function () {
 	init();	
+
+	$(window).on('resize', function() {	
+		setColumns();
+		sizeButtonDiv();
+		for (var i = 0; i < $('.result-image').length; i++) {
+			repositionItem(i, gifWidth);
+
+			//reset endOfPage so api gets called at the right time
+			if (i === $('.result-image').length - 1)
+				endOfPage = parseFloat($('#item-' + i).outerHeight(true)) + parseFloat($('#item-' + i).css('top').split('p')[0]);
+		}
+	});
 	
 	$(window).on('scroll', function() {
 		var pos = $('#results').offset();
@@ -282,7 +331,6 @@ $(document).ready(function () {
 		$affected.each(function() {
 			$(this).animate({ opacity: 1 }, 400);
 		});
-		
 	});
 
 	$('body').on('disappear', '.result-image', function(event, $affected) {

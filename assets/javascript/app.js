@@ -41,6 +41,27 @@ function addSelectedButtonStyle() {
 	}
 }
 
+function setColumns() {	
+	containerWidth = $('.container').width();
+
+	if (containerWidth >= 1100)
+		numCols = 4;
+	else if (containerWidth < 1100 && containerWidth >= 832.5)
+		numCols = 3;
+	else if (containerWidth < 832.5 && containerWidth >= 555)
+		numCols = 2;
+	else
+		numCols = 1;
+
+	colWidth = (containerWidth - (gutterWidth * (numCols - 1))) / numCols;
+	gifWidth = colWidth - (itemPadding * 2) - (itemBorderWidth * 2);
+	
+	columnLefts = [];
+	for(var i = 0; i < numCols; i++) {
+		columnLefts.push((colWidth + gutterWidth) * i);
+	}
+}
+
 //handles creation and lazy-loading of GIFs and their containers
 function buildItems(response, offset = 0) {
 	var results = response.data;
@@ -249,43 +270,22 @@ function populateDropdown(array) {
 	}
 }
 
-function setColumns() {	
-	containerWidth = $('.container').width();
-
-	if (containerWidth >= 1100)
-		numCols = 4;
-	else if (containerWidth < 1100 && containerWidth >= 832.5)
-		numCols = 3;
-	else if (containerWidth < 832.5 && containerWidth >= 555)
-		numCols = 2;
-	else
-		numCols = 1;
-
-	colWidth = (containerWidth - (gutterWidth * (numCols - 1))) / numCols;
-	gifWidth = colWidth - (itemPadding * 2) - (itemBorderWidth * 2);
-	
-	columnLefts = [];
-	for(var i = 0; i < numCols; i++) {
-		columnLefts.push((colWidth + gutterWidth) * i);
-	}
-}
-
-function repositionItem(i, width) {
-	left = columnLefts[i % numCols];
-	var adjustedHeight = $('#img-' + i).data('height') * (width / $('#img-' + i).data('width'));
-	if(i > numCols - 1) {
+function repositionItem(index) {
+	left = columnLefts[index % numCols];
+	var adjustedHeight = $('#img-' + index).data('height') * (gifWidth / $('#img-' + index).data('width'));
+	if(index > numCols - 1) {
 		// find height of last item in same column as item to be updated
-		lastInColHeight = $('#item-' + (i - numCols)).outerHeight(true);
+		lastInColHeight = $('#item-' + (index - numCols)).outerHeight(true);
 		// find "top" css value of last item in same column as item to be updated
-		lastInColTop = $('#item-' + (i - numCols)).css('top').split('p')[0];
+		lastInColTop = $('#item-' + (index - numCols)).css('top').split('p')[0];
 		// append "style" HTML attribute to item to position it properly
-		$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + gutterWidth + 'px'));
+		$('#item-' + index).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + gutterWidth + 'px'));
 	} else {
-		lastInColHeight = $('#item-' + i).outerHeight(true);
+		lastInColHeight = $('#item-' + index).outerHeight(true);
 		lastInColTop = $('.options-div').outerHeight();
-		$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + parseInt(lastInColTop) + 'px');
+		$('#item-' + index).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + parseInt(lastInColTop) + 'px');
 	}
-	$('#imgDiv-' + i).attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px;');
+	$('#imgDiv-' + index).attr('style', 'background-color: ' + randomColor() + '; width: 100%; height: ' +  adjustedHeight + 'px;');
 }
 
 function sizeButtonDiv() {
@@ -310,7 +310,7 @@ $(document).ready(function () {
 		setColumns();
 		sizeButtonDiv();
 		for (var i = 0; i < $('.result-image').length; i++) {
-			repositionItem(i, gifWidth);
+			repositionItem(i);
 
 			//reset endOfPage so api gets called at the right time
 			if (i === $('.result-image').length - 1)

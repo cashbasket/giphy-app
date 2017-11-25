@@ -44,11 +44,11 @@ function addSelectedButtonStyle() {
 function setColumns() {	
 	containerWidth = $('.container').width();
 
-	if (containerWidth >= 1100)
+	if (containerWidth >= 1170)
 		numCols = 4;
-	else if (containerWidth < 1100 && containerWidth >= 832.5)
+	else if (containerWidth >= 768)
 		numCols = 3;
-	else if (containerWidth < 832.5 && containerWidth >= 555)
+	else if (containerWidth >= 480)
 		numCols = 2;
 	else
 		numCols = 1;

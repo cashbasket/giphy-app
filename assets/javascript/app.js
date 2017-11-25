@@ -79,7 +79,7 @@ function buildItems(response, offset = 0) {
 
 	for (var i = offset; i < results.length + offset; i++) {
 		var result = results[i - offset];
-		var adjustedHeight = result.images.fixed_width.height * (gifWidth / result.images.fixed_width.width);
+		var adjustedHeight = result.images.downsized_still.height * (gifWidth / result.images.downsized_still.width);
 		var imgItem = $('<li>').attr('id', 'item-' + i)
 			.attr('style', 'top: 0')
 			.addClass('list-item');
@@ -89,11 +89,11 @@ function buildItems(response, offset = 0) {
 			.attr('style', 'background-color: ' + bgColor + '; width: 100%; height: ' +  adjustedHeight + 'px;');
 		var img = $('<img />').attr('id', 'img-' + i)
 			.attr('src', 'assets/images/blank.gif')
-			.attr('data-src', result.images.fixed_width_still.url)
-			.attr('data-width', result.images.fixed_width.width)
-			.attr('data-height', result.images.fixed_width.height)
-			.attr('data-still', result.images.fixed_width_still.url)
-			.attr('data-animated', result.images.fixed_width.url)
+			.attr('data-src', result.images.downsized_still.url)
+			.attr('data-width', result.images.downsized_still.width)
+			.attr('data-height', result.images.downsized_still.height)
+			.attr('data-still', result.images.downsized_still.url)
+			.attr('data-animated', result.images.downsized.url)
 			.attr('data-state', 'still')
 			.attr('data-appear-vertical-offset', '500')
 			.attr('alt', result.title)

@@ -1,5 +1,5 @@
 // inital topics array
-var topics = ['the simpsons', 'homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz'];
+var topics = ['The Simpsons', 'Homer Simpson', 'Bart Simpson', 'Lisa Simpson', 'Maggie Simpson', 'Marge Simpson', 'Grampa Simpson', 'Sideshow Bob', 'Chief Wiggum', 'Ralph Wiggum', 'Milhouse', 'Nelson Muntz'];
 
 var curTopic, lastInColHeight, lastInColTop, left, gifWidth, colWidth, numCols;
 var containerWidth = $('.container').css('width').split('p')[0];
@@ -220,10 +220,10 @@ function toggleAnimation(imgId) {
 function addTopic(value) {
 	var alreadyAdded = false;
 	var topicIndex = 0;
-	var formattedValue = value.trim().toLowerCase();
+	var formattedValue = value.trim();
 	$('#formMessage').addClass('hidden').text('');
 	for (var i = 0; i < topics.length; i++) {
-		if (topics[i].toLowerCase() === formattedValue) {
+		if (topics[i].toLowerCase() === formattedValue.toLowerCase()) {
 			$('#button-' + i).addClass('pulsate');
 			topicIndex = i;
 			$('#formMessage').removeClass('hidden green')
@@ -235,7 +235,7 @@ function addTopic(value) {
 	}
 
 	if (!alreadyAdded && formattedValue.length > 0) {
-		topics.push(formattedValue);
+		topics.push(value.trim());
 		$('#buttons').empty();
 		$('#formMessage').removeClass('hidden')
 			.addClass('green')

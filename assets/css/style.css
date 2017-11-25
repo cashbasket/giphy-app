@@ -331,11 +331,21 @@ input {
 	}
 }
 
+@media screen and (max-width: 853px) {
+	.button-div,
+	#aside {
+		width: 100%;
+		float: none;
+		margin-bottom: 10px;
+	}
+}
+
 @media screen and (max-width: 771px) {
 	.title-image {
 		width: 100%;
 	}
 }
+
 @media screen and (max-width: 595px) {
 	.select-div {
 		width: 100%;
@@ -343,12 +353,6 @@ input {
 
 	.hint-div {
 		display: none;
-	}
-
-	.button-div,
-	#aside {
-		float: none;
-		margin-bottom: 10px;
 	}
 
 	.about {

@@ -1,5 +1,5 @@
 // inital topics array
-var topics = ['the simpsons', 'homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'barney gumbel', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz'];
+var topics = ['the simpsons', 'homer simpson', 'bart simpson', 'lisa simpson', 'maggie simpson', 'marge simpson', 'grampa simpson', 'sideshow bob', 'chief wiggum', 'ralph wiggum', 'milhouse', 'nelson muntz'];
 
 var curTopic, lastInColHeight, lastInColTop, left, gifWidth, colWidth, numCols;
 var containerWidth = $('.container').css('width').split('p')[0];
@@ -292,7 +292,7 @@ function repositionItem(index) {
 }
 
 function sizeButtonDiv() {
-	if (containerWidth > 555)
+	if (containerWidth > 768)
 		$('.button-div').css('width', parseInt(containerWidth - asideWidth - gutterWidth) + 'px');
 	else
 		$('.button-div').css('width', '100%');

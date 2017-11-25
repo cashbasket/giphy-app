@@ -326,12 +326,12 @@ input {
 
 @media screen and (max-width: 1189px) {
 	.container {
-		width: 90vw;
-		margin: 0 auto;
+		width: 100%;
+		padding: 0 10px;
 	}
 }
 
-@media screen and (max-width: 853px) {
+@media screen and (max-width: 889px) {
 	.button-div,
 	#aside {
 		width: 100%;

@@ -2,7 +2,8 @@
 var topics = ['The Simpsons', 'Homer Simpson', 'Bart Simpson', 'Lisa Simpson', 'Maggie Simpson', 'Marge Simpson', 'Grampa Simpson', 'Sideshow Bob', 'Chief Wiggum', 'Ralph Wiggum', 'Milhouse', 'Nelson Muntz'];
 
 var curTopic, lastInColHeight, lastInColTop, left, gifWidth, colWidth, numCols;
-var containerWidth = $('.container').css('width').split('p')[0];
+var containerWidth = $('.container').outerWidth();
+var containerPaddingAdj = 10;
 var endOfPage = 0;
 var offset = 0;
 var columnLefts = [];
@@ -42,9 +43,7 @@ function addSelectedButtonStyle() {
 }
 
 function setColumns() {	
-	containerWidth = $('.container').width();
-
-	if (containerWidth >= 1170)
+	if (containerWidth >= 1040)
 		numCols = 4;
 	else if (containerWidth >= 768)
 		numCols = 3;
@@ -53,7 +52,7 @@ function setColumns() {
 	else
 		numCols = 1;
 
-	colWidth = (containerWidth - (gutterWidth * (numCols - 1))) / numCols;
+	colWidth = ((containerWidth - (gutterWidth * (numCols - 1))) / numCols);
 	gifWidth = colWidth - (itemPadding * 2) - (itemBorderWidth * 2);
 	
 	columnLefts = [];
@@ -292,13 +291,14 @@ function repositionItem(index) {
 }
 
 function sizeButtonDiv() {
-	if (containerWidth > 768)
-		$('.button-div').css('width', parseInt(containerWidth - asideWidth - gutterWidth) + 'px');
+	if ($('.container').outerWidth() > 873)
+		$('.button-div').css('width', parseInt($('.container').outerWidth() - (containerPaddingAdj * 2) - asideWidth - gutterWidth) + 'px');
 	else
 		$('.button-div').css('width', '100%');
 }
 
 function init() {
+	containerWidth = $('.container').outerWidth() < 1170 ? $('.container').outerWidth() - (containerPaddingAdj * 4) : 1170;
 	setColumns();
 	sizeButtonDiv();
 	getGIFs(topics[0], 10);
@@ -310,6 +310,7 @@ $(document).ready(function () {
 	init();	
 
 	$(window).on('resize', function() {	
+		containerWidth = $('.container').outerWidth() < 1170 ? $('.container').outerWidth() - (containerPaddingAdj * 2) : 1170;
 		setColumns();
 		sizeButtonDiv();
 		for (var i = 0; i < $('.result-image').length; i++) {

@@ -239,10 +239,6 @@ input {
 	margin-bottom: 20px;
 }
 
-.about-text{
-	float: left;
-}
-
 .about a {
 	color: #333;
 	text-decoration: underline;
@@ -297,7 +293,7 @@ input {
 	}
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
 	.form-control {
 		width: initial !important;
 		display: inline-block !important;
@@ -310,18 +306,12 @@ input {
 	.hint-div {
 		display: none;
 	}
-}
 
-@media screen and (max-width: 595px) {
 	.about {
         text-align: center;
         line-height: 1.5;
 	}
-	
-	.about-text {
-		float: none;
-	}
-	
+
     .social {
         list-style: none;
         position: relative;

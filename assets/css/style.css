@@ -132,6 +132,11 @@ input {
 .btn {
 	border-radius: 0 !important;
 }
+
+.btn {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
 .btn-option {
 	background-image: linear-gradient(to bottom, #f9db45, #e2c543);
 	border: 1px solid #333;

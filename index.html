@@ -7,6 +7,7 @@
 	<title>The Simpsons (.gif)</title>
 	<link rel="icon" href="favicon.ico">
 	<script src="https://use.fontawesome.com/6207f4ce66.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed:400,700" rel="stylesheet">
@@ -38,17 +39,17 @@
 			Topic: <select id="ddlSticky"></select>
 		</div>
 	</div>
-	<div class="container">
-		<img class="title-image" src="assets/images/title_y.png" alt="Simpsons GIFs title image" />
+	<div class="custom-container">
+		<img class="title-image img-responsive" src="assets/images/title_y.png" alt="Simpsons GIFs title image" />
 		<div id="top" class="clearfix">
 			<h2>Choose a topic:</h2>
-			<div class="select-div">
-				<div id="buttons" class="button-div"></div>
-				<div id="aside">
+			<div class="row">
+				<div id="buttons" class="col-md-8"></div>
+				<div id="aside" class="col-md-4">
 					<aside id="addTopics" class="add-well">
 						<form id="form" class="form-inline">
 							<label for="input">Create a New, Simpsons-y Topic:</label><br>
-							<input type="text" id="input" placeholder="e.g. comic book guy" class="form-input" />
+							<input type="text" id="input" placeholder="e.g. comic book guy" class="form-control" />
 							<button id="submit" type="submit" class="btn btn-success">Add Topic</button>
 							<div id="formMessage" class="form-message hidden"></div>
 						</form>
@@ -57,11 +58,11 @@
 			</div>
 		</div>
 		<div class="contents">
-			<div>
-				<div class="hint-div">
+			<div class="row options-div">
+				<div class="hint-div col-sm-6">
 					(Hint: Click on an image!)
 				</div>
-				<div class="options-div">
+				<div class="col-sm-6 select-div">
 					Show
 					<select id="numGifs" class="num-gifs">
 						<option value="10">10</option>

@@ -2,14 +2,11 @@
 var topics = ['The Simpsons', 'Homer Simpson', 'Bart Simpson', 'Lisa Simpson', 'Maggie Simpson', 'Marge Simpson', 'Grampa Simpson', 'Sideshow Bob', 'Chief Wiggum', 'Ralph Wiggum', 'Milhouse', 'Nelson Muntz'];
 
 var curTopic, lastInColHeight, lastInColTop, left, gifWidth, colWidth, numCols;
-var containerWidth = $('.container').outerWidth();
-var containerPaddingAdj = 10;
 var endOfPage = 0;
 var offset = 0;
 var columnLefts = [];
 
 // global constants
-const asideWidth = $('.add-well').outerWidth();
 const itemPadding = parseInt($('.result-list > li').css('padding-left'));
 const itemBorderWidth = $('.result-list > li').css('border-left-width').split('p')[0];
 const gutterWidth = 10;
@@ -42,17 +39,17 @@ function addSelectedButtonStyle() {
 	}
 }
 
-function setColumns() {	
-	if (containerWidth >= 1040)
+function setColumns(width) {	
+	if (width >= 1040)
 		numCols = 4;
-	else if (containerWidth >= 768)
+	else if (width >= 768)
 		numCols = 3;
-	else if (containerWidth >= 480)
+	else if (width >= 480)
 		numCols = 2;
 	else
 		numCols = 1;
 
-	colWidth = ((containerWidth - (gutterWidth * (numCols - 1))) / numCols);
+	colWidth = ((width - (gutterWidth * (numCols - 1))) / numCols);
 	gifWidth = colWidth - (itemPadding * 2) - (itemBorderWidth * 2);
 	
 	columnLefts = [];
@@ -85,7 +82,7 @@ function buildItems(response, offset = 0) {
 		var bgColor = randomColor();
 		var imgDiv = $('<div class="img-div">').attr('id', 'imgDiv-' + i)
 			.attr('data-bg', bgColor)
-			.attr('style', 'background-color: ' + bgColor + '; width: 100%; height: ' +  adjustedHeight + 'px;');
+			.attr('style', 'background-color: ' + bgColor + '; height: ' +  adjustedHeight + 'px;');
 		var img = $('<img />').attr('id', 'img-' + i)
 			.attr('src', 'assets/images/blank.gif')
 			.attr('data-src', result.images.downsized_still.url)
@@ -290,17 +287,8 @@ function repositionItem(index) {
 	$('#imgDiv-' + index).attr('style', 'background-color: ' + bgColor + '; width: 100%; height: ' +  adjustedHeight + 'px;');
 }
 
-function sizeButtonDiv() {
-	if ($('.container').outerWidth() > 873)
-		$('.button-div').css('width', parseInt($('.container').outerWidth() - (containerPaddingAdj * 2) - asideWidth - gutterWidth) + 'px');
-	else
-		$('.button-div').css('width', '100%');
-}
-
 function init() {
-	containerWidth = $('.container').outerWidth() < 1170 ? $('.container').outerWidth() - (containerPaddingAdj * 4) : 1170;
-	setColumns();
-	sizeButtonDiv();
+	setColumns($('.custom-container').width());
 	getGIFs(topics[0], 10);
 	createButtons(topics);
 	populateDropdown(topics);
@@ -310,9 +298,7 @@ $(document).ready(function () {
 	init();	
 
 	$(window).on('resize', function() {	
-		containerWidth = $('.container').outerWidth() < 1170 ? $('.container').outerWidth() - (containerPaddingAdj * 2) : 1170;
-		setColumns();
-		sizeButtonDiv();
+		setColumns($('.custom-container').width());
 		for (var i = 0; i < $('.result-image').length; i++) {
 			repositionItem(i);
 

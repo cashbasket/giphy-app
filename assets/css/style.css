@@ -285,6 +285,12 @@ input {
 	}
 }
 
+@media screen and (max-width: 1199px) {
+	#input {
+		width: 250px;
+	}
+}
+
 @media screen and (max-width: 1188px) {
 	.custom-container {
 		width: 100% !important;

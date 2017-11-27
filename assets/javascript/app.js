@@ -99,21 +99,7 @@ function buildItems(response, offset = 0) {
 			.text('Rating: ' + result.rating.toUpperCase());
 		$('.result-list').append(imgItem.append(imgDiv.append(img)).append(rating));				
 
-		// this determines the value of the "left" css property to be used (see global "columnLefts" array)
-		left = columnLefts[i % numCols];
-
-		if(i > numCols - 1) {
-			// find height of last item in same column as item to be updated
-			lastInColHeight = $('#item-' + (i - numCols)).outerHeight(true);
-			// find "top" css value of last item in same column as item to be updated
-			lastInColTop = $('#item-' + (i - numCols)).css('top').split('p')[0];
-			// append "style" HTML attribute to item to position it properly
-			$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + gutterWidth + 'px'));
-		} else {
-			lastInColHeight = $('#item-' + i).outerHeight(true);
-			lastInColTop = $('.options-div').outerHeight();
-			$('#item-' + i).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + parseInt(lastInColTop) + 'px');
-		}
+		positionItem(i);
 
 		if (i === results.length + offset - 1) {
 			endOfPage = parseFloat($('#item-' + i).outerHeight(true)) + parseFloat($('#item-' + i).css('top').split('p')[0]);
@@ -130,6 +116,28 @@ function buildItems(response, offset = 0) {
 			$(element).appear();
 		}
 	});
+}
+
+function positionItem(index) {
+	// this determines the value of the "left" css property to be used (see global "columnLefts" array)
+	left = columnLefts[index % numCols];
+	var adjustedHeight = $('#img-' + index).data('height') * (gifWidth / $('#img-' + index).data('width'));	
+	
+	if(index > numCols - 1) {
+		// find height of last item in same column as item to be updated
+		lastInColHeight = $('#item-' + (index - numCols)).outerHeight(true);
+		// find "top" css value of last item in same column as item to be updated
+		lastInColTop = $('#item-' + (index - numCols)).css('top').split('p')[0];
+		// append "style" HTML attribute to item to position it properly
+		$('#item-' + index).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + gutterWidth + 'px'));
+	} else {
+		lastInColHeight = $('#item-' + index).outerHeight(true);
+		lastInColTop = $('.options-div').outerHeight();
+		$('#item-' + index).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + parseInt(lastInColTop) + 'px');
+	}
+
+	var bgColor = $('#imgDiv-' + index).data('bg');
+	$('#imgDiv-' + index).attr('style', 'background-color: #' + bgColor + '; width: 100%; height: ' +  adjustedHeight + 'px;');
 }
 
 function error() {
@@ -198,7 +206,7 @@ function getGIFs(topic, limit, force = false) {
 }
 
 function randomColor() {
-	var colors = ['#f9db45', '#98d9f9', '#999999', '#d5effc', '#000000', '#ff0000', '#00ff00', '#0000ff', '#00ffff', '#ff00ff'];
+	var colors = ['f9db45', '98d9f9', '999999', 'd5effc', '000000', 'ff0000', '00ff00', '0000ff', '00ffff', '#f00ff'];
 	return colors[Math.floor(Math.random() * colors.length)];
 }
 
@@ -268,25 +276,6 @@ function populateDropdown(array) {
 	}
 }
 
-function repositionItem(index) {
-	left = columnLefts[index % numCols];
-	var adjustedHeight = $('#img-' + index).data('height') * (gifWidth / $('#img-' + index).data('width'));
-	if(index > numCols - 1) {
-		// find height of last item in same column as item to be updated
-		lastInColHeight = $('#item-' + (index - numCols)).outerHeight(true);
-		// find "top" css value of last item in same column as item to be updated
-		lastInColTop = $('#item-' + (index - numCols)).css('top').split('p')[0];
-		// append "style" HTML attribute to item to position it properly
-		$('#item-' + index).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + (parseInt(lastInColHeight) + parseInt(lastInColTop) + gutterWidth + 'px'));
-	} else {
-		lastInColHeight = $('#item-' + index).outerHeight(true);
-		lastInColTop = $('.options-div').outerHeight();
-		$('#item-' + index).attr('style', 'width: ' + colWidth + 'px; position: absolute; left: ' + left + 'px; top: ' + parseInt(lastInColTop) + 'px');
-	}
-	var bgColor = $('#imgDiv-' + index).data('bg');
-	$('#imgDiv-' + index).attr('style', 'background-color: ' + bgColor + '; width: 100%; height: ' +  adjustedHeight + 'px;');
-}
-
 function init() {
 	setColumns($('.custom-container').width());
 	getGIFs(topics[0], 10);
@@ -300,7 +289,8 @@ $(document).ready(function () {
 	$(window).on('resize', function() {	
 		setColumns($('.custom-container').width());
 		for (var i = 0; i < $('.result-image').length; i++) {
-			repositionItem(i);
+			//reposition item
+			positionItem(i);
 
 			//reset endOfPage so api gets called at the right time
 			if (i === $('.result-image').length - 1)

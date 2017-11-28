@@ -274,6 +274,7 @@ function populateDropdown(array) {
 		}
 		$('#ddlSticky').append(option);
 	}
+	$('#ddlSticky').selectpicker('refresh');
 }
 
 function init() {

@@ -167,7 +167,8 @@ function getInfiniteGIFs(topic, force = false) {
 					buildItems(response, offset);
 					
 					window.onscroll = function() {
-						if ((window.innerHeight + Math.ceil(window.pageYOffset + 1)) >= endOfPage - 100) {
+						//when user gets 95% of the way to the bottom of the page, add more GIFs
+						if ((window.innerHeight + Math.ceil(window.pageYOffset + 1)) >= endOfPage * 0.95) {
 							window.onscroll = null;
 							getInfiniteGIFs(curTopic, true);
 						}

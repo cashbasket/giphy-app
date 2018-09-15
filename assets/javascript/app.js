@@ -183,29 +183,6 @@ function getInfiniteGIFs(topic, force = false) {
 	}
 }
 
-function getGIFs(topic, limit, force = false) {
-	if (curTopic != topic || force) {
-		// we have to reset the offset for infinite scrolling AND nullify the onscroll event every time the user chooses to go from infinite GIFs back to finite GIFs
-		offset = 0;
-		window.onscroll = null;
-
-		$.ajax('https://api.giphy.com/v1/gifs/search?q=' + encodeURIComponent(topic) + '&api_key=' + apiKey + '&limit=' + limit)
-			.done(function (response) {
-				if(topic != curTopic) {
-					$('.result-list').empty();
-				}
-				$('.topic').removeClass('btn-selected');
-				curTopic = topic;
-				addSelectedButtonStyle();
-				populateDropdown(topics);
-				buildItems(response);
-			})
-			.fail(function () {
-				error();
-			});
-	}
-}
-
 function randomColor() {
 	var colors = ['f9db45', '98d9f9', '999999', 'd5effc', '000000', 'ff0000', '00ff00', '0000ff', '00ffff', 'ff00ff'];
 	return colors[Math.floor(Math.random() * colors.length)];
@@ -280,7 +257,7 @@ function populateDropdown(array) {
 
 function init() {
 	setColumns($('.custom-container').width());
-	getGIFs(topics[0], 10);
+	getInfiniteGIFs(topics[0], true);
 	createButtons(topics);
 	populateDropdown(topics);
 }
@@ -322,11 +299,7 @@ $(document).ready(function () {
 	});
 
 	$('body').on('click', '.topic', function () {
-		if($('#numGifs').val() == 'infinite') {
 			getInfiniteGIFs($(this).attr('data-value'), true);
-		} else {
-			getGIFs($(this).attr('data-value'), $('#numGifs').val());
-		}
 	});
 
 	$('body').on('change', '#ddlSticky', function () {
@@ -335,14 +308,6 @@ $(document).ready(function () {
 
 	$('body').on('click', '.result-image', function () {
 		toggleAnimation($(this).attr('id'));
-	});
-
-	$('body').on('change', '#numGifs', function() {
-		if($(this).val() == 'infinite') {
-			getInfiniteGIFs(curTopic, true);
-		} else {
-			getGIFs(curTopic, $(this).val(), true);
-		}
 	});
 
 	$('#form').on('submit', function (event) {

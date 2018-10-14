@@ -279,7 +279,7 @@ $(document).ready(function () {
 	
 	$(window).on('scroll', function() {
 		var pos = $('#results').offset();
-		if ($('#numGifs').val() == 'infinite' && $(this).scrollTop() > pos.top) {
+		if ($(this).scrollTop() > pos.top) {
 			$('#stickyNav').removeClass('hidden').addClass('fixed');
 		} else {
 			$('#stickyNav').addClass('hidden').removeClass('fixed');
